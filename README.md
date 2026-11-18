@@ -22,9 +22,25 @@ Die speziellere Ebene schlägt die allgemeinere:
 
 ## Stand
 
-Gerüst, Backend-Datenmodell (DCA) und der Resolver (`src/Resolver/`, reines PHP
-mit Unit-Tests) sind angelegt. Als Nächstes folgen die Anbindung der
-Datenbank an den Resolver und die Frontend-Ausgabe.
+Gerüst, Backend-Datenmodell (DCA), Resolver (`src/Resolver/`, reines PHP mit
+Unit-Tests) und die Frontend-Ausgabe sind angelegt.
+
+## Ausgabe
+
+Im Backend unter „Inhalte → Öffnungszeiten“ Orte, Zeitpläne, Ausnahmen und
+Schließungen pflegen. Auf der Seite das Inhaltselement „Öffnungszeiten“
+einfügen und einen Ort wählen. Es gibt aus:
+
+- den aktuellen Status („Jetzt geöffnet bis 17:00 Uhr“, Hinweistext bei Schließung)
+- optional eine Wochenübersicht der nächsten sieben Tage
+- optional strukturierte Daten nach schema.org (JSON-LD, `openingHoursSpecification`):
+  reguläre Wochenzeiten plus abweichende Tage der nächsten 30 Tage
+  (Ausnahmen, Saisonwechsel, Schließungen)
+
+Die Templates liegen in `contao/templates/` und lassen sich im Theme überschreiben:
+`content_element/opentimes_hours.html.twig` sowie die Bausteine
+`opentimes/_status`, `opentimes/_week` und `opentimes/_json_ld`.
+Die Ausgabe wird 60 Sekunden gecacht, damit spontane Schließungen zeitnah sichtbar sind.
 
 ## Tests
 

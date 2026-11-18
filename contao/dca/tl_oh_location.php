@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_oh_location'] = [
         ],
     ],
     'palettes' => [
-        'default' => '{title_legend},title;{address_legend},street,postal,city',
+        'default' => '{title_legend},title,schema_type;{address_legend},street,postal,city',
     ],
     'fields' => [
         'id' => [
@@ -59,6 +59,14 @@ $GLOBALS['TL_DCA']['tl_oh_location'] = [
             'search' => true,
             'eval' => ['mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'],
             'sql' => "varchar(255) NOT NULL default ''",
+        ],
+        // schema.org-Typ für die strukturierten Daten
+        'schema_type' => [
+            'inputType' => 'select',
+            'default' => 'Place',
+            'options' => ['Place', 'LocalBusiness', 'Museum', 'Library', 'Store', 'Restaurant', 'CafeOrCoffeeShop', 'GovernmentOffice', 'CivicStructure'],
+            'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
+            'sql' => "varchar(64) NOT NULL default 'Place'",
         ],
         'street' => [
             'inputType' => 'text',

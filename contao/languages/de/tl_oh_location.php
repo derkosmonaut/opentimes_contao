@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_oh_location']['title'] = ['Name', 'Name des Ortes.'];
-$GLOBALS['TL_LANG']['tl_oh_location']['street'] = ['Straße', 'Straße und Hausnummer.'];
+$GLOBALS['TL_LANG']['tl_oh_location']['schema_type'] = ['Typ (schema.org)', 'Bestimmt den Typ in den strukturierten Daten für Suchmaschinen, z. B. Museum oder Bibliothek.'];
+$GLOBALS['TL_LANG']['tl_oh_location']['street'] =['Straße', 'Straße und Hausnummer.'];
 $GLOBALS['TL_LANG']['tl_oh_location']['postal'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG']['tl_oh_location']['city'] = ['Ort', ''];
 

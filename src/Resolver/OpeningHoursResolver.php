@@ -7,6 +7,7 @@ namespace Derkosmonaut\OpenTimesBundle\Resolver;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\ClosurePeriod;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\Interval;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\OpeningHours;
+use Derkosmonaut\OpenTimesBundle\Resolver\Model\Season;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\Slot;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\Status;
 use DateTimeImmutable;
@@ -91,17 +92,7 @@ final class OpeningHoursResolver
             return $this->merge($intervals);
         }
 
-        $season = null;
-
-        foreach ($hours->seasons as $candidate) {
-            if (!$this->inRange($ymd, $candidate->start, $candidate->stop, $candidate->recurring)) {
-                continue;
-            }
-
-            if (null === $season || $candidate->priority > $season->priority) {
-                $season = $candidate;
-            }
-        }
+        $season = $this->findSeason($hours, $ymd);
 
         if (null !== $season) {
             return $this->merge($this->slotsToIntervals($season->slots, $day));
@@ -131,6 +122,61 @@ final class OpeningHoursResolver
         $active = array_values(array_filter($hours->closures, static fn (ClosurePeriod $c): bool => $c->active));
 
         return $this->merge($this->clip($this->merge($all), $active));
+    }
+
+    /**
+     * Zeitfenster eines Tages nach Abzug aktiver Schließungen. Reine Tagessicht,
+     * Fenster werden nicht über Tagesgrenzen hinweg zusammengeführt.
+     *
+     * @return list<Interval>
+     */
+    public function getDayIntervals(OpeningHours $hours, DateTimeImmutable $date): array
+    {
+        $active = array_values(array_filter($hours->closures, static fn (ClosurePeriod $c): bool => $c->active));
+
+        return $this->merge($this->clip($this->getDayWindows($hours, $date), $active));
+    }
+
+    /**
+     * Die regulären Wochenzeiten, die an diesem Datum gelten (Saison oder Standard),
+     * ohne Ausnahmen und Schließungen. null = kein Standardplan hinterlegt.
+     *
+     * @return list<Slot>|null
+     */
+    public function getRegularSlots(OpeningHours $hours, DateTimeImmutable $date): ?array
+    {
+        $season = $this->findSeason($hours, $date->format('Y-m-d'));
+
+        return $season?->slots ?? $hours->defaultSlots;
+    }
+
+    /**
+     * Konkrete Zeitfenster einer Slot-Liste für einen Tag.
+     *
+     * @param list<Slot> $slots
+     *
+     * @return list<Interval>
+     */
+    public function getWindowsForSlots(array $slots, DateTimeImmutable $date): array
+    {
+        return $this->merge($this->slotsToIntervals($slots, $date->setTime(0, 0)));
+    }
+
+    private function findSeason(OpeningHours $hours, string $ymd): ?Season
+    {
+        $season = null;
+
+        foreach ($hours->seasons as $candidate) {
+            if (!$this->inRange($ymd, $candidate->start, $candidate->stop, $candidate->recurring)) {
+                continue;
+            }
+
+            if (null === $season || $candidate->priority > $season->priority) {
+                $season = $candidate;
+            }
+        }
+
+        return $season;
     }
 
     private function findActiveClosure(OpeningHours $hours, DateTimeImmutable $now): ?ClosurePeriod
