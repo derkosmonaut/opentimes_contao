@@ -14,12 +14,14 @@ final readonly class OpeningHours
      * @param list<Season>        $seasons
      * @param list<ExceptionDay>  $exceptions
      * @param list<ClosurePeriod> $closures
+     * @param list<string>        $holidays     Feiertage als "Y-m-d": geschlossen, sofern keine Ausnahme für den Tag gilt
      */
     public function __construct(
         public ?array $defaultSlots,
         public array $seasons = [],
         public array $exceptions = [],
         public array $closures = [],
+        public array $holidays = [],
     ) {
     }
 

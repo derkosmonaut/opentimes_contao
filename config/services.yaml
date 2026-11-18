@@ -10,6 +10,9 @@ services:
     Derkosmonaut\OpenTimesBundle\Output\:
         resource: ../src/Output/
 
+    Derkosmonaut\OpenTimesBundle\Diagnostics\:
+        resource: ../src/Diagnostics/
+
     Derkosmonaut\OpenTimesBundle\Repository\:
         resource: ../src/Repository/
 

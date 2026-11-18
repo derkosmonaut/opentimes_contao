@@ -18,6 +18,7 @@ use DateTimeImmutable;
  * Reihenfolge, die speziellere Ebene gewinnt:
  *   1. Schließung (schneidet beliebige Zeiten heraus)
  *   2. Ausnahme   (ersetzt den ganzen Tag)
+ *   2a. Feiertag  (geschlossen, aber schwächer als eine Ausnahme)
  *   3. Saison     (ersetzt die Standardzeiten, höhere Priorität gewinnt)
  *   4. Standardzeiten
  *
@@ -92,6 +93,11 @@ final class OpeningHoursResolver
             return $this->merge($intervals);
         }
 
+        // Feiertage schließen, solange keine eigene Ausnahme für den Tag etwas anderes festlegt
+        if (\in_array($ymd, $hours->holidays, true)) {
+            return [];
+        }
+
         $season = $this->findSeason($hours, $ymd);
 
         if (null !== $season) {
@@ -160,6 +166,19 @@ final class OpeningHoursResolver
     public function getWindowsForSlots(array $slots, DateTimeImmutable $date): array
     {
         return $this->merge($this->slotsToIntervals($slots, $date->setTime(0, 0)));
+    }
+
+    /**
+     * Alle Saisons, die an diesem Tag ("Y-m-d") gelten, unabhängig von der Priorität.
+     *
+     * @return list<Season>
+     */
+    public function getSeasonsOn(OpeningHours $hours, string $ymd): array
+    {
+        return array_values(array_filter(
+            $hours->seasons,
+            fn (Season $s): bool => $this->inRange($ymd, $s->start, $s->stop, $s->recurring),
+        ));
     }
 
     private function findSeason(OpeningHours $hours, string $ymd): ?Season

@@ -10,15 +10,5 @@
     {% endwith %}
   {% endadd %}
 
-  <div class="opentimes">
-    {% include "@Contao/opentimes/_status.html.twig" %}
-
-    {% if show_week and has_plan %}
-      {% include "@Contao/opentimes/_week.html.twig" %}
-    {% endif %}
-
-    {% if show_json_ld and json_ld %}
-      {% include "@Contao/opentimes/_json_ld.html.twig" %}
-    {% endif %}
-  </div>
+  {% include "@Contao/opentimes/_output.html.twig" %}
 {% endblock %}

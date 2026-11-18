@@ -17,6 +17,7 @@ $GLOBALS['TL_LANG']['opentimes'] = [
     'to' => 'bis',
     'week_caption' => 'Öffnungszeiten der nächsten Tage',
     'today' => 'heute',
+    'today_hours' => 'Heute',
     'overnight' => 'bis zum Folgetag',
     'closure_note' => 'Hinweis zur Schließung',
     'col_day' => 'Tag',

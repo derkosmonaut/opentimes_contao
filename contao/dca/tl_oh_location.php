@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_oh_location'] = [
         ],
     ],
     'palettes' => [
-        'default' => '{title_legend},title,schema_type;{address_legend},street,postal,city',
+        'default' => '{title_legend},title,schema_type;{address_legend},street,postal,city;{holiday_legend},holiday_region;{preview_legend},opentimes_preview',
     ],
     'fields' => [
         'id' => [
@@ -83,6 +83,18 @@ $GLOBALS['TL_DCA']['tl_oh_location'] = [
             'search' => true,
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
             'sql' => "varchar(255) NOT NULL default ''",
+        ],
+        // Feiertage dieses Bundeslandes gelten als geschlossen, sofern keine Ausnahme etwas anderes festlegt
+        'holiday_region' => [
+            'inputType' => 'select',
+            'options' => ['DE', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_oh_location']['regions'],
+            'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
+            'sql' => "varchar(2) NOT NULL default ''",
+        ],
+        // nur Anzeige, wird über LocationPreviewListener gefüllt
+        'opentimes_preview' => [
+            'eval' => ['tl_class' => 'clr'],
         ],
     ],
 ];

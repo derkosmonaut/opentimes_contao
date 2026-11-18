@@ -1,0 +1,14 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{% use "@Contao/component/_stylesheet.html.twig" %}
+
+{% block content %}
+  {# Grundstil mit den Farben für geöffnet/geschlossen; im Theme per CSS-Variablen anpassbar #}
+  {% add "opentimes_css" to stylesheets %}
+    {% with {file: asset('bundles/derkosmonautopentimes/css/opentimes.css')} %}
+      {{ block('stylesheet_component') }}
+    {% endwith %}
+  {% endadd %}
+
+  {% include "@Contao/opentimes/_output.html.twig" %}
+{% endblock %}

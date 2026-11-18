@@ -10,6 +10,9 @@ use Contao\DC_Table;
  * (ISO: 1 = Montag ... 7 = Sonntag). Liegt "closes" vor oder gleich "opens",
  * endet das Fenster am Folgetag (Nachtbetrieb); es gehört zum Starttag.
  */
+// Schnellauswahl für die Wochentage (Mo–Fr, Wochenende, alle)
+$GLOBALS['TL_JAVASCRIPT']['opentimes_backend'] = 'bundles/derkosmonautopentimes/js/backend.js';
+
 $GLOBALS['TL_DCA']['tl_oh_slot'] = [
     'config' => [
         'dataContainer' => DC_Table::class,
