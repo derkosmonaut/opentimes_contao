@@ -5,6 +5,8 @@ declare(strict_types=1);
 $GLOBALS['TL_LANG']['tl_oh_slot']['weekdays'] = ['Wochentage', 'Tage, an denen dieses Zeitfenster gilt.'];
 $GLOBALS['TL_LANG']['tl_oh_slot']['opens'] = ['Öffnet um', 'Uhrzeit im Format HH:MM.'];
 $GLOBALS['TL_LANG']['tl_oh_slot']['closes'] = ['Schließt um', 'Liegt die Zeit vor oder gleich der Öffnungszeit, endet das Fenster am Folgetag.'];
+$GLOBALS['TL_LANG']['tl_oh_slot']['opens2'] = ['Zweites Fenster: öffnet um', 'Optional, z. B. nach einer Mittagspause.'];
+$GLOBALS['TL_LANG']['tl_oh_slot']['closes2'] = ['Zweites Fenster: schließt um', 'Optional, Uhrzeit im Format HH:MM.'];
 
 $GLOBALS['TL_LANG']['tl_oh_slot']['weekday_names'] = [
     1 => 'Montag',

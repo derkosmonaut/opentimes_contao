@@ -26,8 +26,21 @@ $GLOBALS['TL_DCA']['tl_oh_slot'] = [
             'panelLayout' => 'limit',
         ],
         'label' => [
-            'fields' => ['opens', 'closes'],
-            'format' => '%s – %s',
+            'fields' => ['weekdays', 'opens', 'closes', 'opens2', 'closes2'],
+            'label_callback' => static function (array $row): string {
+                $names = $GLOBALS['TL_LANG']['tl_oh_slot']['weekday_names'] ?? [];
+                $days = array_map(
+                    static fn ($day): string => mb_substr((string) ($names[(int) $day] ?? $day), 0, 2),
+                    (array) Contao\StringUtil::deserialize($row['weekdays'], true),
+                );
+                $times = [$row['opens'].' – '.$row['closes']];
+
+                if ('' !== (string) $row['opens2'] && '' !== (string) $row['closes2']) {
+                    $times[] = $row['opens2'].' – '.$row['closes2'];
+                }
+
+                return implode(', ', $days).': '.implode(' und ', $times);
+            },
         ],
         'global_operations' => [
             'all' => [
@@ -47,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_oh_slot'] = [
         ],
     ],
     'palettes' => [
-        'default' => '{slot_legend},weekdays,opens,closes',
+        'default' => '{slot_legend},weekdays,opens,closes,opens2,closes2',
     ],
     'fields' => [
         'id' => [
@@ -78,6 +91,19 @@ $GLOBALS['TL_DCA']['tl_oh_slot'] = [
         'closes' => [
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateCloses']],
+            'sql' => "varchar(5) NOT NULL default ''",
+        ],
+        // optionales zweites Fenster (z. B. nach einer Mittagspause)
+        'opens2' => [
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 5, 'placeholder' => '14:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateOpens']],
+            'sql' => "varchar(5) NOT NULL default ''",
+        ],
+        'closes2' => [
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 5, 'placeholder' => '18:00', 'tl_class' => 'w50'],
             'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateCloses']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
