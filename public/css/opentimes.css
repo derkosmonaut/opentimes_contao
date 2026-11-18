@@ -1,0 +1,70 @@
+/*
+ * Grundstil der Öffnungszeiten. Farben lassen sich im Theme über CSS-Variablen anpassen:
+ *   .opentimes { --opentimes-open: #...; --opentimes-closed: #...; }
+ * Beide Standardfarben erreichen auf weißem Grund einen Kontrast von mindestens 4,5:1.
+ * Der Status steht zusätzlich immer als Text da und wird nicht allein über die Farbe vermittelt.
+ */
+.opentimes {
+  --opentimes-open: #1b7f3b;
+  --opentimes-closed: #b3261e;
+  --opentimes-unknown: #5f6368;
+}
+
+.opentimes__status {
+  margin: 0 0 1em;
+}
+
+.opentimes__status::before {
+  content: "";
+  display: inline-block;
+  width: .6em;
+  height: .6em;
+  margin-right: .5em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.opentimes__status--open { color: var(--opentimes-open); }
+.opentimes__status--closed { color: var(--opentimes-closed); }
+.opentimes__status--unknown { color: var(--opentimes-unknown); }
+
+.opentimes__message,
+.opentimes__next {
+  display: block;
+  font-weight: 400;
+}
+
+.opentimes__caption {
+  margin: 0 0 .25em;
+  font-weight: 600;
+}
+
+.opentimes__week {
+  margin: 0;
+}
+
+.opentimes__day {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25em 1em;
+  padding: .25em 0;
+}
+
+.opentimes__day dt {
+  flex: 0 0 11em;
+  font-weight: 600;
+}
+
+.opentimes__day dd {
+  flex: 1 1 10em;
+  margin: 0;
+}
+
+.opentimes__day--today {
+  background: rgba(0, 0, 0, .04);
+}
+
+.opentimes__closure-note {
+  display: block;
+  color: var(--opentimes-closed);
+}

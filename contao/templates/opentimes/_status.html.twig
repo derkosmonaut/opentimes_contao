@@ -1,20 +1,19 @@
-{# Aktueller Status. Erwartet: status (Derkosmonaut\OpenTimesBundle\Resolver\Model\Status), location #}
-<p class="opentimes__status opentimes__status--{{ status.state }}" role="status">
+{# Aktueller Status. Erwartet: status (Resolver\Model\Status), labels, location.
+   Klassen: opentimes__status--open | --closed | --unknown (Farben siehe opentimes.css) #}
+<p class="opentimes__status opentimes__status--{{ status.state }}">
   {% if status.state == 'open' %}
-    <strong>{{ 'status.open_until'|trans({}, 'contao_opentimes') }}
-      {{ status.until|date('H:i') }} {{ 'time_suffix'|trans({}, 'contao_opentimes') }}</strong>
+    <strong>{{ labels.status.open_until }} {{ status.until|date('H:i') }} {{ labels.time_suffix }}</strong>
   {% elseif status.state == 'closed' %}
-    <strong>{{ 'status.closed'|trans({}, 'contao_opentimes') }}</strong>
+    <strong>{{ labels.status.closed }}</strong>
     {% if status.message %}
       <span class="opentimes__message">{{ status.message }}</span>
     {% endif %}
     {% if status.nextOpen %}
       <span class="opentimes__next">
-        {{ 'status.opens_again'|trans({}, 'contao_opentimes') }}
-        {{ status.nextOpen|date('d.m.Y, H:i') }} {{ 'time_suffix'|trans({}, 'contao_opentimes') }}
+        {{ labels.status.opens_again }} {{ status.nextOpen|date('d.m.Y, H:i') }} {{ labels.time_suffix }}
       </span>
     {% endif %}
   {% else %}
-    {{ 'status.unknown'|trans({}, 'contao_opentimes') }}
+    <strong>{{ labels.status.unknown }}</strong>
   {% endif %}
 </p>
