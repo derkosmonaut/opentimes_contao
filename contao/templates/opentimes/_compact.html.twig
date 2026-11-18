@@ -1,0 +1,12 @@
+{# Kompakte Ausgabe für Kopf- oder Fußbereich: Status und die Zeiten von heute. Erwartet: status, today, has_plan, labels. #}
+{% include "@Contao/opentimes/_status.html.twig" %}
+{% if has_plan and today %}
+  <p class="opentimes__today-hours">
+    {{ labels.today_hours }}:
+    {% if today.closed %}
+      {{ labels.closed }}
+    {% else %}
+      {% for window in today.windows %}<span class="opentimes__window"><time>{{ window.opens }}</time> {{ labels.to }} <time>{{ window.closes }}</time> {{ labels.time_suffix }}</span>{% if not loop.last %}, {% endif %}{% endfor %}
+    {% endif %}
+  </p>
+{% endif %}

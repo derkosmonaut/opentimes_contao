@@ -1,2 +1,4 @@
-{# Strukturierte Daten (schema.org, JSON-LD). Erwartet: json_ld, bereits sicher kodiert (JSON_HEX_TAG). #}
+{# Strukturierte Daten (schema.org, JSON-LD). Erwartet: json_lds (Liste), bereits sicher kodiert (JSON_HEX_TAG). #}
+{% for json_ld in json_lds %}
 <script type="application/ld+json">{{ json_ld|raw }}</script>
+{% endfor %}

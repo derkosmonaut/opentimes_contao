@@ -1,0 +1,19 @@
+{# Gemeinsamer Baustein für Content-Element und Frontend-Modul.
+   Variablen kommen aus Output\HoursRenderer: layout, entries, labels, show_week, show_json_ld, json_lds. #}
+<div class="opentimes opentimes--{{ layout }}">
+  {% if layout == 'compact' %}
+    {% include "@Contao/opentimes/_compact.html.twig" %}
+  {% elseif layout == 'list' %}
+    {% include "@Contao/opentimes/_locations.html.twig" %}
+  {% else %}
+    {% include "@Contao/opentimes/_status.html.twig" %}
+
+    {% if show_week and has_plan %}
+      {% include "@Contao/opentimes/_week.html.twig" %}
+    {% endif %}
+  {% endif %}
+
+  {% if show_json_ld %}
+    {% include "@Contao/opentimes/_json_ld.html.twig" %}
+  {% endif %}
+</div>

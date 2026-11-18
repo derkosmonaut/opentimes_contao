@@ -314,4 +314,23 @@ final class OpeningHoursResolverTest extends TestCase
     {
         return $date?->format('Y-m-d H:i');
     }
+
+    public function testHolidayClosesTheDay(): void
+    {
+        $hours = new OpeningHours([Slot::allDays('09:00', '17:00')], holidays: ['2026-12-25']);
+        $tz = new DateTimeZone('Europe/Berlin');
+
+        self::assertSame([], $this->resolver->getDayWindows($hours, new DateTimeImmutable('2026-12-25', $tz)));
+        self::assertCount(1, $this->resolver->getDayWindows($hours, new DateTimeImmutable('2026-12-24', $tz)));
+        self::assertFalse($this->resolver->getStatus($hours, new DateTimeImmutable('2026-12-25 10:00', $tz))->isOpen());
+    }
+
+    public function testExceptionOverridesHoliday(): void
+    {
+        $exception = new ExceptionDay('2026-12-25', null, false, false, [Slot::allDays('10:00', '12:00')]);
+        $hours = new OpeningHours([Slot::allDays('09:00', '17:00')], [], [$exception], [], ['2026-12-25']);
+        $tz = new DateTimeZone('Europe/Berlin');
+
+        self::assertTrue($this->resolver->getStatus($hours, new DateTimeImmutable('2026-12-25 11:00', $tz))->isOpen());
+    }
 }

@@ -7,6 +7,7 @@ namespace Derkosmonaut\OpenTimesBundle\Repository;
 use Contao\StringUtil;
 use DateTimeImmutable;
 use DateTimeZone;
+use Derkosmonaut\OpenTimesBundle\Holiday\GermanHolidays;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\ClosurePeriod;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\ExceptionDay;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\OpeningHours;
@@ -97,7 +98,31 @@ class OpeningHoursRepository
             $defaultSlots = [...($defaultSlots ?? []), ...$slots];
         }
 
-        return new OpeningHours($defaultSlots, $seasons, $this->loadExceptions($locationId, $timezone), $this->loadClosures($locationId, $timezone));
+        return new OpeningHours(
+            $defaultSlots,
+            $seasons,
+            $this->loadExceptions($locationId, $timezone),
+            $this->loadClosures($locationId, $timezone),
+            $this->loadHolidays($locationId, $timezone),
+        );
+    }
+
+    /**
+     * Feiertage des eingestellten Bundeslandes für das Vorjahr bis zwei Jahre voraus.
+     *
+     * @return list<string>
+     */
+    private function loadHolidays(int $locationId, DateTimeZone $timezone): array
+    {
+        $region = (string) $this->connection->fetchOne('SELECT holiday_region FROM tl_oh_location WHERE id = ?', [$locationId]);
+
+        if ('' === $region) {
+            return [];
+        }
+
+        $year = (int) (new DateTimeImmutable('now', $timezone))->format('Y');
+
+        return GermanHolidays::datesForYears($year - 1, $year + 2, $region);
     }
 
     /**
