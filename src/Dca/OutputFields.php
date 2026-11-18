@@ -10,9 +10,12 @@ namespace Derkosmonaut\OpenTimesBundle\Dca;
 final class OutputFields
 {
     /**
+     * @param bool $dynamic true: Ort bzw. Orte werden je nach Darstellung ein- und ausgeblendet (Pflichtfelder);
+     *                      false: beide Felder stehen immer in der Maske und sind keine Pflichtfelder
+     *
      * @return array<string, array<string, mixed>>
      */
-    public static function fields(string $table): array
+    public static function fields(string $table, bool $dynamic = true): array
     {
         return [
             'opentimes_layout' => [
@@ -27,13 +30,13 @@ final class OutputFields
                 'inputType' => 'select',
                 'foreignKey' => 'tl_oh_location.title',
                 'relation' => ['type' => 'hasOne', 'load' => 'lazy'],
-                'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
+                'eval' => ['mandatory' => $dynamic, 'includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
                 'sql' => 'int(10) unsigned NOT NULL default 0',
             ],
             'opentimes_locations' => [
                 'inputType' => 'checkbox',
                 'foreignKey' => 'tl_oh_location.title',
-                'eval' => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'clr'],
+                'eval' => ['mandatory' => $dynamic, 'multiple' => true, 'tl_class' => 'clr'],
                 'sql' => 'blob NULL',
             ],
             'opentimes_days' => [
