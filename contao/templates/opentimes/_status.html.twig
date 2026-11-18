@@ -1,0 +1,20 @@
+{# Aktueller Status. Erwartet: status (Derkosmonaut\OpenTimesBundle\Resolver\Model\Status), location #}
+<p class="opentimes__status opentimes__status--{{ status.state }}" role="status">
+  {% if status.state == 'open' %}
+    <strong>{{ 'status.open_until'|trans({}, 'contao_opentimes') }}
+      {{ status.until|date('H:i') }} {{ 'time_suffix'|trans({}, 'contao_opentimes') }}</strong>
+  {% elseif status.state == 'closed' %}
+    <strong>{{ 'status.closed'|trans({}, 'contao_opentimes') }}</strong>
+    {% if status.message %}
+      <span class="opentimes__message">{{ status.message }}</span>
+    {% endif %}
+    {% if status.nextOpen %}
+      <span class="opentimes__next">
+        {{ 'status.opens_again'|trans({}, 'contao_opentimes') }}
+        {{ status.nextOpen|date('d.m.Y, H:i') }} {{ 'time_suffix'|trans({}, 'contao_opentimes') }}
+      </span>
+    {% endif %}
+  {% else %}
+    {{ 'status.unknown'|trans({}, 'contao_opentimes') }}
+  {% endif %}
+</p>

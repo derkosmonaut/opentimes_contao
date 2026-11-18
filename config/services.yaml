@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Derkosmonaut\OpenTimesBundle\Resolver\:
+        resource: ../src/Resolver/
+        exclude: ../src/Resolver/Model/
+
+    Derkosmonaut\OpenTimesBundle\Output\:
+        resource: ../src/Output/
+
+    Derkosmonaut\OpenTimesBundle\Repository\:
+        resource: ../src/Repository/
+
+    Derkosmonaut\OpenTimesBundle\Controller\:
+        resource: ../src/Controller/
+        public: true

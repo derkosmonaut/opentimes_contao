@@ -1,0 +1,34 @@
+{
+    "name": "derkosmonaut/opentimes-contao",
+    "description": "Öffnungszeiten für Contao: mehrere Orte, Standardzeiten, Saisonzeiten, Ausnahmen und spontane Schließungen",
+    "type": "contao-bundle",
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "php": "^8.5",
+        "contao/core-bundle": "^5.3",
+        "contao/manager-plugin": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5 || ^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Derkosmonaut\\OpenTimesBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Derkosmonaut\\OpenTimesBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-components/installer": true,
+            "contao/manager-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Derkosmonaut\\OpenTimesBundle\\ContaoManager\\Plugin"
+    }
+}
