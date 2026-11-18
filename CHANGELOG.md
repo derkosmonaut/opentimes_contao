@@ -2,6 +2,9 @@
 
 ## Unveröffentlicht
 
+### Behoben
+- Inhaltselement: Die Darstellung „Ortsliste“ ließ sich nicht wählen, weil die Maske nicht auf die Orte-Auswahl umschaltete. Jetzt stehen „Ort“ und „Orte“ immer in der Maske (nur das Frontend-Modul schaltet um)
+
 ### Neu
 - Feiertage je Bundesland (Auswahl beim Ort)
 - Vorschau im Backend beim Ort, mit Hinweisen auf Unstimmigkeiten
