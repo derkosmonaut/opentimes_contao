@@ -153,7 +153,7 @@ final class OpeningHoursResolver
     {
         $season = $this->findSeason($hours, $date->format('Y-m-d'));
 
-        return $season?->slots ?? $hours->defaultSlots;
+        return $season->slots ?? $hours->defaultSlots;
     }
 
     /**

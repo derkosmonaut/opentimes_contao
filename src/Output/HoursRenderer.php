@@ -37,9 +37,10 @@ class HoursRenderer
      */
     public function prepare(FragmentTemplate $template, Model $model): ?array
     {
-        $layout = \in_array($model->opentimes_layout, self::LAYOUTS, true) ? (string) $model->opentimes_layout : 'full';
-        $days = max(1, min(14, (int) $model->opentimes_days ?: 7));
-        $ids = $this->locationIds($model, $layout);
+        $row = $model->row();
+        $layout = \in_array($row['opentimes_layout'] ?? '', self::LAYOUTS, true) ? (string) $row['opentimes_layout'] : 'full';
+        $days = max(1, min(14, (int) ($row['opentimes_days'] ?? 0) ?: 7));
+        $ids = $this->locationIds($row, $layout);
 
         $timezone = new DateTimeZone(date_default_timezone_get());
         $now = new DateTimeImmutable('now', $timezone);
@@ -47,7 +48,7 @@ class HoursRenderer
         System::loadLanguageFile('default');
         System::loadLanguageFile('opentimes');
 
-        $showJsonLd = (bool) $model->opentimes_jsonld;
+        $showJsonLd = (bool) ($row['opentimes_jsonld'] ?? false);
         $entries = [];
         $jsonLds = [];
         $maxAge = self::MAX_AGE;
@@ -91,7 +92,7 @@ class HoursRenderer
 
         $template->set('labels', $GLOBALS['TL_LANG']['opentimes'] ?? []);
         $template->set('layout', $layout);
-        $template->set('show_week', (bool) $model->opentimes_week);
+        $template->set('show_week', (bool) ($row['opentimes_week'] ?? false));
         $template->set('show_json_ld', $showJsonLd);
         $template->set('entries', $entries);
         $template->set('json_lds', $jsonLds);
@@ -107,15 +108,19 @@ class HoursRenderer
     }
 
     /**
+     * @param array<string, mixed> $row
+     *
      * @return list<int>
      */
-    private function locationIds(Model $model, string $layout): array
+    private function locationIds(array $row, string $layout): array
     {
         if ('list' === $layout) {
-            return array_values(array_filter(array_map('intval', StringUtil::deserialize($model->opentimes_locations, true))));
+            return array_values(array_filter(array_map('intval', StringUtil::deserialize($row['opentimes_locations'] ?? null, true))));
         }
 
-        return [] !== ($id = (int) $model->opentimes_location) ? [$id] : [];
+        $id = (int) ($row['opentimes_location'] ?? 0);
+
+        return $id > 0 ? [$id] : [];
     }
 
     /**
