@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-// Texte der Frontend-Ausgabe, im Twig-Template als 'schluessel'|trans({}, 'contao_opentimes'),
-// z. B. 'status.open_until'.
+// Texte der Frontend-Ausgabe. Der Controller stellt sie den Templates als Variable "labels"
+// bereit, z. B. {{ labels.status.open_until }}.
 $GLOBALS['TL_LANG']['opentimes'] = [
     'status' => [
         'open' => 'Jetzt geöffnet',
@@ -14,6 +14,7 @@ $GLOBALS['TL_LANG']['opentimes'] = [
     ],
     'closed' => 'Geschlossen',
     'time_suffix' => 'Uhr',
+    'to' => 'bis',
     'week_caption' => 'Öffnungszeiten der nächsten Tage',
     'today' => 'heute',
     'overnight' => 'bis zum Folgetag',

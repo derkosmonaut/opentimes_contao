@@ -44,6 +44,12 @@ Die Templates liegen in `contao/templates/` und lassen sich im Theme überschrei
 `opentimes/_status`, `opentimes/_week` und `opentimes/_json_ld`.
 Die Ausgabe wird 60 Sekunden gecacht, damit spontane Schließungen zeitnah sichtbar sind.
 
+Die Wochenübersicht ist eine Beschreibungsliste (`dl`) mit ausgeschriebenem „von … bis …“,
+damit sie für Screenreader gut lesbar ist. Der Status trägt die Klasse
+`opentimes__status--open`, `--closed` oder `--unknown`. Ein kleines Stylesheet
+(`public/css/opentimes.css`) färbt geöffnet grün und geschlossen rot; die Farben lassen sich im
+Theme über die CSS-Variablen `--opentimes-open`, `--opentimes-closed` und `--opentimes-unknown` anpassen.
+
 ## Tests
 
 ```

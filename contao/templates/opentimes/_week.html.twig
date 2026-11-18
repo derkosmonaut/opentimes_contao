@@ -1,36 +1,27 @@
-{# Wochenübersicht. Erwartet: days (Liste aus ViewDataBuilder), location #}
-<table class="opentimes__week">
-  <caption>{{ location.title }}: {{ 'week_caption'|trans({}, 'contao_opentimes') }}</caption>
-  <thead>
-    <tr>
-      <th scope="col">{{ 'col_day'|trans({}, 'contao_opentimes') }}</th>
-      <th scope="col">{{ 'col_hours'|trans({}, 'contao_opentimes') }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for day in days %}
-      <tr class="{{ day.isToday ? 'opentimes__day opentimes__day--today' : 'opentimes__day' }}{{ day.closed ? ' opentimes__day--closed' : '' }}">
-        <th scope="row">
-          {{ day.label }}
-          <time datetime="{{ day.date|date('Y-m-d') }}">{{ day.date|date('d.m.') }}</time>
-          {% if day.isToday %}<span class="opentimes__today">({{ 'today'|trans({}, 'contao_opentimes') }})</span>{% endif %}
-        </th>
-        <td>
-          {% if day.closed %}
-            {{ 'closed'|trans({}, 'contao_opentimes') }}
-          {% else %}
-            {% for window in day.windows %}
-              <span class="opentimes__window">
-                <time>{{ window.opens }}</time>–<time>{{ window.closes }}</time> {{ 'time_suffix'|trans({}, 'contao_opentimes') }}
-                {% if window.overnight %}<small>({{ 'overnight'|trans({}, 'contao_opentimes') }})</small>{% endif %}
-              </span>{% if not loop.last %}, {% endif %}
-            {% endfor %}
-          {% endif %}
-          {% if day.closureNote %}
-            <small class="opentimes__closure-note">{{ 'closure_note'|trans({}, 'contao_opentimes') }}</small>
-          {% endif %}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{# Wochenübersicht als Beschreibungsliste. Erwartet: days (Liste aus dem ViewDataBuilder), labels, location.
+   Pro Tag eine Gruppe aus dt (Tag und Datum) und dd (Zeiten). Zeiten werden als "von bis" ausgeschrieben,
+   damit Screenreader sie nicht über einen Gedankenstrich vorlesen müssen. #}
+<p class="opentimes__caption">{{ location.title }}: {{ labels.week_caption }}</p>
+<dl class="opentimes__week">
+  {% for day in days %}
+    <div class="opentimes__day{{ day.isToday ? ' opentimes__day--today' }}{{ day.closed ? ' opentimes__day--closed' }}">
+      <dt>
+        {{ day.label }}
+        <time datetime="{{ day.date|date('Y-m-d') }}">{{ day.date|date('d.m.') }}</time>
+        {% if day.isToday %}<span class="opentimes__today">({{ labels.today }})</span>{% endif %}
+      </dt>
+      <dd>
+        {% if day.closed %}
+          {{ labels.closed }}
+        {% else %}
+          {% for window in day.windows %}
+            <span class="opentimes__window"><time>{{ window.opens }}</time> {{ labels.to }} <time>{{ window.closes }}</time> {{ labels.time_suffix }}{% if window.overnight %} <small>({{ labels.overnight }})</small>{% endif %}</span>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if day.closureNote %}
+          <small class="opentimes__closure-note">{{ labels.closure_note }}</small>
+        {% endif %}
+      </dd>
+    </div>
+  {% endfor %}
+</dl>

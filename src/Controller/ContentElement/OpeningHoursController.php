@@ -8,6 +8,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\System;
 use DateTimeImmutable;
 use DateTimeZone;
 use Derkosmonaut\OpenTimesBundle\Output\SchemaOrgBuilder;
@@ -43,6 +44,9 @@ class OpeningHoursController extends AbstractContentElementController
 
         $view = $this->viewDataBuilder->build($hours, $now, $this->getWeekdayLabels());
 
+        System::loadLanguageFile('opentimes');
+
+        $template->set('labels', $GLOBALS['TL_LANG']['opentimes'] ?? []);
         $template->set('location', $location);
         $template->set('status', $view['status']);
         $template->set('has_plan', $view['hasPlan']);
