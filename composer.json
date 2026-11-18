@@ -5,7 +5,7 @@
     "license": "GPL-3.0-or-later",
     "require": {
         "php": "^8.5",
-        "contao/core-bundle": "^5.3",
+        "contao/core-bundle": "^5.7",
         "contao/manager-plugin": "^2.0"
     },
     "require-dev": {

@@ -1,6 +1,6 @@
 # opentimes_contao
 
-Eine kleine Öffnungszeiten-Erweiterung für Contao (Bundle für Contao 5, PHP 8.5).
+Eine kleine Öffnungszeiten-Erweiterung für Contao (Bundle für Contao 5.7 oder neuer, PHP 8.5).
 
 ## Funktionsumfang (Ziel)
 
