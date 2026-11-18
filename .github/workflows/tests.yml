@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+
+      # Der Resolver ist reines PHP; Plattform-Anforderungen von Contao werden hier nicht gebraucht.
+      - run: composer install --no-interaction --prefer-dist --ignore-platform-reqs
+
+      - run: vendor/bin/phpunit
+
+      - name: PHP-Syntax prüfen
+        run: find src contao config -name '*.php' -print0 | xargs -0 -n1 php -l
