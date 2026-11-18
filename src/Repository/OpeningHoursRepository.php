@@ -12,6 +12,7 @@ use Derkosmonaut\OpenTimesBundle\Resolver\Model\ExceptionDay;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\OpeningHours;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\Season;
 use Derkosmonaut\OpenTimesBundle\Resolver\Model\Slot;
+use Derkosmonaut\OpenTimesBundle\Util\TimeFormat;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -67,7 +68,7 @@ class OpeningHoursRepository
         $slotsBySchedule = [];
 
         foreach ($slotRows as $row) {
-            $slot = $this->createSlot($row);
+            $slot = $this->createSlot($row, $timezone);
 
             if (null !== $slot) {
                 $slotsBySchedule[(int) $row['pid']][] = $slot;
@@ -123,8 +124,11 @@ class OpeningHoursRepository
 
             if ('hours' === $row['type']) {
                 foreach ([['opens', 'closes'], ['opens2', 'closes2']] as [$opens, $closes]) {
-                    if ('' !== (string) $row[$opens] && '' !== (string) $row[$closes]) {
-                        $slots[] = Slot::allDays((string) $row[$opens], (string) $row[$closes]);
+                    $from = TimeFormat::normalize((string) $row[$opens], false, $timezone);
+                    $to = TimeFormat::normalize((string) $row[$closes], true, $timezone);
+
+                    if (null !== $from && null !== $to) {
+                        $slots[] = Slot::allDays($from, $to);
                     }
                 }
             }
@@ -172,10 +176,11 @@ class OpeningHoursRepository
     /**
      * @param array<string, mixed> $row
      */
-    private function createSlot(array $row): ?Slot
+    private function createSlot(array $row, DateTimeZone $timezone): ?Slot
     {
-        $opens = (string) $row['opens'];
-        $closes = (string) $row['closes'];
+        // ungültige Uhrzeiten überspringen, damit eine fehlerhafte Zeile nicht die ganze Seite stört
+        $opens = TimeFormat::normalize((string) $row['opens'], false, $timezone) ?? '';
+        $closes = TimeFormat::normalize((string) $row['closes'], true, $timezone) ?? '';
 
         $weekdays = array_values(array_filter(
             array_map('intval', StringUtil::deserialize($row['weekdays'], true)),
