@@ -16,7 +16,7 @@ Eine kleine Öffnungszeiten-Erweiterung für Contao (Bundle für Contao 5.7 oder
 - Nachtbetrieb (Fenster über Mitternacht)
 - Gesetzliche Feiertage je Bundesland (geschlossen, eine Ausnahme hat Vorrang)
 - Zwei Zeitfenster pro Eintrag, Vorschau und Hinweise im Backend
-- Content-Element und Frontend-Modul, Layouts „Voll“, „Kompakt“ und „Ortsliste“
+- Content-Element und Frontend-Modul, Layouts „Voll“ und „Kompakt“, jeweils mit einem oder mehreren Orten
 - Deutsche und englische Texte
 
 ## Auflösungsreihenfolge
@@ -45,7 +45,8 @@ Auf der Seite das Inhaltselement oder das Frontend-Modul „Öffnungszeiten“ e
 
 - **Voll:** Status, optional Wochenübersicht (1 bis 14 Tage)
 - **Kompakt:** Status und die Zeiten von heute, z. B. für Kopf- oder Fußbereich
-- **Ortsliste:** mehrere Orte, je mit Status und den Zeiten von heute
+
+Es lassen sich ein oder mehrere Orte anhaken; bei mehreren erscheinen sie nacheinander mit ihrem Namen.
 
 Optional gibt es strukturierte Daten nach schema.org (JSON-LD, `openingHoursSpecification`):
 reguläre Wochenzeiten plus abweichende Tage der nächsten 30 Tage
@@ -53,7 +54,7 @@ reguläre Wochenzeiten plus abweichende Tage der nächsten 30 Tage
 
 Die Templates liegen in `contao/templates/` und lassen sich im Theme überschreiben:
 `content_element/opentimes_hours.html.twig`, `frontend_module/opentimes_hours.html.twig` sowie die Bausteine
-`opentimes/_output`, `_status`, `_week`, `_compact`, `_locations` und `_json_ld`.
+`opentimes/_output`, `_status`, `_week`, `_compact` und `_json_ld`.
 
 Die Wochenübersicht ist eine Beschreibungsliste (`dl`) mit ausgeschriebenem „von … bis …“,
 damit sie für Screenreader gut lesbar ist. Der Status trägt die Klasse

@@ -19,7 +19,7 @@ use Derkosmonaut\OpenTimesBundle\Repository\OpeningHoursRepository;
  */
 class HoursRenderer
 {
-    public const LAYOUTS = ['full', 'compact', 'list'];
+    public const LAYOUTS = ['full', 'compact'];
 
     /** Kürzeste und längste Cache-Zeit in Sekunden. */
     private const MIN_AGE = 60;
@@ -39,8 +39,12 @@ class HoursRenderer
     {
         $row = $model->row();
         $layout = \in_array($row['opentimes_layout'] ?? '', self::LAYOUTS, true) ? (string) $row['opentimes_layout'] : 'full';
+        // die frühere Ortsliste entspricht der kompakten Darstellung mit mehreren Orten
+        if ('list' === ($row['opentimes_layout'] ?? '')) {
+            $layout = 'compact';
+        }
         $days = max(1, min(14, (int) ($row['opentimes_days'] ?? 0) ?: 7));
-        $ids = $this->locationIds($row, $layout);
+        $ids = $this->locationIds($row);
 
         $timezone = new DateTimeZone(date_default_timezone_get());
         $now = new DateTimeImmutable('now', $timezone);
@@ -108,19 +112,21 @@ class HoursRenderer
     }
 
     /**
+     * Gewählte Orte; ältere Elemente kennen nur den früheren Einzel-Ort.
+     *
      * @param array<string, mixed> $row
      *
      * @return list<int>
      */
-    private function locationIds(array $row, string $layout): array
+    private function locationIds(array $row): array
     {
-        if ('list' === $layout) {
-            return array_values(array_filter(array_map('intval', StringUtil::deserialize($row['opentimes_locations'] ?? null, true))));
+        $ids = array_values(array_unique(array_filter(array_map('intval', StringUtil::deserialize($row['opentimes_locations'] ?? null, true)))));
+
+        if ([] === $ids && (int) ($row['opentimes_location'] ?? 0) > 0) {
+            return [(int) $row['opentimes_location']];
         }
 
-        $id = (int) ($row['opentimes_location'] ?? 0);
-
-        return $id > 0 ? [$id] : [];
+        return $ids;
     }
 
     /**
