@@ -13,6 +13,9 @@ services:
     Derkosmonaut\OpenTimesBundle\Repository\:
         resource: ../src/Repository/
 
+    Derkosmonaut\OpenTimesBundle\EventListener\:
+        resource: ../src/EventListener/
+
     Derkosmonaut\OpenTimesBundle\Controller\:
         resource: ../src/Controller/
         public: true
