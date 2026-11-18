@@ -57,7 +57,7 @@ class OpeningHoursRepository
 
         // Zeitfenster aller Zeitpläne des Ortes in einer Abfrage, nach Zeitplan gruppiert
         $slotRows = $this->connection->fetchAllAssociative(
-            'SELECT s.pid, s.weekdays, s.opens, s.closes
+            'SELECT s.pid, s.weekdays, s.opens, s.closes, s.opens2, s.closes2
                FROM tl_oh_slot s
          INNER JOIN tl_oh_schedule p ON p.id = s.pid
               WHERE p.pid = ?
@@ -68,9 +68,7 @@ class OpeningHoursRepository
         $slotsBySchedule = [];
 
         foreach ($slotRows as $row) {
-            $slot = $this->createSlot($row, $timezone);
-
-            if (null !== $slot) {
+            foreach ($this->createSlots($row, $timezone) as $slot) {
                 $slotsBySchedule[(int) $row['pid']][] = $slot;
             }
         }
@@ -174,24 +172,36 @@ class OpeningHoursRepository
     }
 
     /**
+     * Ein Datensatz enthält ein Pflichtfenster und optional ein zweites Fenster für dieselben Wochentage.
+     *
      * @param array<string, mixed> $row
+     *
+     * @return list<Slot>
      */
-    private function createSlot(array $row, DateTimeZone $timezone): ?Slot
+    private function createSlots(array $row, DateTimeZone $timezone): array
     {
-        // ungültige Uhrzeiten überspringen, damit eine fehlerhafte Zeile nicht die ganze Seite stört
-        $opens = TimeFormat::normalize((string) $row['opens'], false, $timezone) ?? '';
-        $closes = TimeFormat::normalize((string) $row['closes'], true, $timezone) ?? '';
-
         $weekdays = array_values(array_filter(
             array_map('intval', StringUtil::deserialize($row['weekdays'], true)),
             static fn (int $day): bool => $day >= 1 && $day <= 7,
         ));
 
-        if ('' === $opens || '' === $closes || [] === $weekdays) {
-            return null;
+        if ([] === $weekdays) {
+            return [];
         }
 
-        return new Slot($weekdays, $opens, $closes);
+        $slots = [];
+
+        // ungültige Uhrzeiten überspringen, damit eine fehlerhafte Zeile nicht die ganze Seite stört
+        foreach ([['opens', 'closes'], ['opens2', 'closes2']] as [$opensField, $closesField]) {
+            $opens = TimeFormat::normalize((string) ($row[$opensField] ?? ''), false, $timezone);
+            $closes = TimeFormat::normalize((string) ($row[$closesField] ?? ''), true, $timezone);
+
+            if (null !== $opens && null !== $closes) {
+                $slots[] = new Slot($weekdays, $opens, $closes);
+            }
+        }
+
+        return $slots;
     }
 
     private function formatDate(mixed $timestamp, DateTimeZone $timezone): ?string
