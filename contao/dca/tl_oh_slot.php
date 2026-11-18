@@ -68,15 +68,17 @@ $GLOBALS['TL_DCA']['tl_oh_slot'] = [
             'eval' => ['multiple' => true, 'mandatory' => true, 'tl_class' => 'clr'],
             'sql' => 'blob NULL',
         ],
-        // Uhrzeiten als "HH:MM"; die strenge Validierung folgt mit dem Resolver
+        // Uhrzeiten als "HH:MM", geprüft und vereinheitlicht durch TimeInputCallback
         'opens' => [
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50'],
+            'eval' => ['mandatory' => true, 'maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateOpens']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
         'closes' => [
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50'],
+            'eval' => ['mandatory' => true, 'maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateCloses']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
     ],

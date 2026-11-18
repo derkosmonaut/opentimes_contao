@@ -95,23 +95,27 @@ $GLOBALS['TL_DCA']['tl_oh_exception'] = [
         ],
         'opens' => [
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50 clr'],
+            'eval' => ['mandatory' => true, 'maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50 clr'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateOpens']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
         'closes' => [
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50'],
+            'eval' => ['mandatory' => true, 'maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateCloses']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
         // optionales zweites Fenster (z. B. nach einer Mittagspause)
         'opens2' => [
             'inputType' => 'text',
-            'eval' => ['maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50'],
+            'eval' => ['maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateOpens']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
         'closes2' => [
             'inputType' => 'text',
-            'eval' => ['maxlength' => 5, 'rgxp' => 'time', 'tl_class' => 'w50'],
+            'eval' => ['maxlength' => 5, 'placeholder' => '09:00', 'tl_class' => 'w50'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\TimeInputCallback', 'validateCloses']],
             'sql' => "varchar(5) NOT NULL default ''",
         ],
     ],
