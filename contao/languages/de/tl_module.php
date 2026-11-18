@@ -12,3 +12,4 @@ $GLOBALS['TL_LANG']['tl_module']['opentimes_jsonld'] = ['Strukturierte Daten aus
 $GLOBALS['TL_LANG']['tl_module']['opentimes_layouts'] = ['full' => 'Voll (Status und Wochenübersicht)', 'compact' => 'Kompakt (Status und heutige Zeiten)', 'list' => 'Ortsliste (mehrere Orte)'];
 
 $GLOBALS['TL_LANG']['tl_module']['opentimes_legend'] = 'Öffnungszeiten';
+$GLOBALS['TL_LANG']['tl_module']['opentimes_alert_locations'] = ['Orte', 'Orte, deren Schließungen angezeigt werden. Ohne Auswahl gelten alle Orte.'];

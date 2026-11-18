@@ -12,6 +12,11 @@ $GLOBALS['TL_LANG']['opentimes'] = [
         'unknown' => 'Opening hours on request',
     ],
     'closed' => 'Closed',
+    'alert' => [
+        'region' => 'Notice about opening hours',
+        'closed' => 'temporarily closed',
+        'until' => 'Expected until',
+    ],
     'time_suffix' => '',
     'to' => 'to',
     'week_caption' => 'Opening hours for the next days',

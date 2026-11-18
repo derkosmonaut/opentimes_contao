@@ -12,3 +12,4 @@ $GLOBALS['TL_LANG']['tl_module']['opentimes_jsonld'] = ['Output structured data'
 $GLOBALS['TL_LANG']['tl_module']['opentimes_layouts'] = ['full' => 'Full (status and weekly overview)', 'compact' => 'Compact (status and today\'s hours)', 'list' => 'Location list (several locations)'];
 
 $GLOBALS['TL_LANG']['tl_module']['opentimes_legend'] = 'Opening hours';
+$GLOBALS['TL_LANG']['tl_module']['opentimes_alert_locations'] = ['Locations', 'Locations whose closures are shown. Without a selection all locations apply.'];

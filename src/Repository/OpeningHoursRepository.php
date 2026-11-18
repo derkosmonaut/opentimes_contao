@@ -49,6 +49,14 @@ class OpeningHoursRepository
         ];
     }
 
+    /**
+     * @return list<int>
+     */
+    public function findAllLocationIds(): array
+    {
+        return array_map('intval', $this->connection->fetchFirstColumn('SELECT id FROM tl_oh_location ORDER BY id'));
+    }
+
     public function loadHours(int $locationId, DateTimeZone $timezone): OpeningHours
     {
         $schedules = $this->connection->fetchAllAssociative(

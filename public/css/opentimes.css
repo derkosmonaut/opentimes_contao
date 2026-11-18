@@ -68,3 +68,31 @@
   display: block;
   color: var(--opentimes-closed);
 }
+
+/* Hinweis bei laufender Schließung (Modul "Schließungs-Hinweis") */
+.opentimes-alert {
+  --opentimes-alert-bg: #fdecea;
+  --opentimes-alert-border: var(--opentimes-closed, #b3261e);
+  margin: 0 0 1em;
+  padding: .75em 1em;
+  border-left: .3em solid var(--opentimes-alert-border);
+  background: var(--opentimes-alert-bg);
+  color: #1f1f1f;
+}
+
+.opentimes-alert__item {
+  margin: 0;
+}
+
+.opentimes-alert__item + .opentimes-alert__item {
+  margin-top: .5em;
+}
+
+.opentimes-alert__title {
+  color: var(--opentimes-alert-border);
+}
+
+.opentimes-alert__message,
+.opentimes-alert__until {
+  display: block;
+}
