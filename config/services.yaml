@@ -3,4 +3,6 @@ services:
         autowire: true
         autoconfigure: true
 
-    # Nächster Schritt: Resolver-Service (src/Resolver/) hier registrieren
+    Derkosmonaut\OpenTimesBundle\Resolver\:
+        resource: ../src/Resolver/
+        exclude: ../src/Resolver/Model/

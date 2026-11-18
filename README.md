@@ -22,8 +22,18 @@ Die speziellere Ebene schlägt die allgemeinere:
 
 ## Stand
 
-Gerüst und Backend-Datenmodell (DCA) sind angelegt. Als Nächstes folgen der
-Resolver-Service mit Unit-Tests und danach die Frontend-Ausgabe.
+Gerüst, Backend-Datenmodell (DCA) und der Resolver (`src/Resolver/`, reines PHP
+mit Unit-Tests) sind angelegt. Als Nächstes folgen die Anbindung der
+Datenbank an den Resolver und die Frontend-Ausgabe.
+
+## Tests
+
+```
+composer install
+vendor/bin/phpunit
+```
+
+Die Tests laufen bei jedem Push auch in GitHub Actions.
 
 ## Lizenz
 
