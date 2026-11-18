@@ -83,7 +83,8 @@ class OpeningHoursRepository
                 $start = $this->formatDate($schedule['start'], $timezone);
                 $stop = $this->formatDate($schedule['stop'], $timezone);
 
-                if (null === $start) {
+                // ein Ende vor dem Beginn ist ungültig und würde bei Wiederholung fast das ganze Jahr treffen
+                if (null === $start || (null !== $stop && $stop < $start)) {
                     continue;
                 }
 
@@ -131,9 +132,16 @@ class OpeningHoursRepository
                 }
             }
 
+            $stop = $this->formatDate($row['stop'], $timezone);
+
+            // ein Ende vor dem Beginn ist ungültig: dann gilt nur der Starttag
+            if (null !== $stop && $stop < $start) {
+                $stop = null;
+            }
+
             $exceptions[] = new ExceptionDay(
                 $start,
-                $this->formatDate($row['stop'], $timezone),
+                $stop,
                 '' !== (string) $row['recurring'],
                 'hours' !== $row['type'] || [] === $slots,
                 $slots,

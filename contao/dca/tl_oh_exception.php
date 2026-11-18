@@ -78,6 +78,7 @@ $GLOBALS['TL_DCA']['tl_oh_exception'] = [
         'stop' => [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+            'save_callback' => [['Derkosmonaut\\OpenTimesBundle\\Dca\\DateRangeCallback', 'validateStop']],
             'sql' => 'int(10) unsigned NULL',
         ],
         'recurring' => [
