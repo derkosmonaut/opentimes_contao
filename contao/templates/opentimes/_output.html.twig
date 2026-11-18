@@ -1,17 +1,22 @@
 {# Gemeinsamer Baustein für Content-Element und Frontend-Modul.
-   Variablen kommen aus Output\HoursRenderer: layout, entries, labels, show_week, show_json_ld, json_lds. #}
+   Variablen kommen aus Output\HoursRenderer: layout, entries (ein Eintrag je Ort), labels, show_week, show_json_ld, json_lds. #}
 <div class="opentimes opentimes--{{ layout }}">
-  {% if layout == 'compact' %}
-    {% include "@Contao/opentimes/_compact.html.twig" %}
-  {% elseif layout == 'list' %}
-    {% include "@Contao/opentimes/_locations.html.twig" %}
-  {% else %}
-    {% include "@Contao/opentimes/_status.html.twig" %}
+  {% for entry in entries %}
+    <div class="opentimes__item">
+      {# bei mehreren Orten steht der Name vor dem Status #}
+      {% if entries|length > 1 %}
+        <strong class="opentimes__location-title">{{ entry.location.title }}</strong>
+      {% endif %}
 
-    {% if show_week and has_plan %}
-      {% include "@Contao/opentimes/_week.html.twig" %}
-    {% endif %}
-  {% endif %}
+      {% include "@Contao/opentimes/_status.html.twig" with {status: entry.status, location: entry.location} %}
+
+      {% if layout == 'compact' %}
+        {% include "@Contao/opentimes/_compact.html.twig" with {today: entry.today, has_plan: entry.has_plan} %}
+      {% elseif show_week and entry.has_plan %}
+        {% include "@Contao/opentimes/_week.html.twig" with {days: entry.days, location: entry.location} %}
+      {% endif %}
+    </div>
+  {% endfor %}
 
   {% if show_json_ld %}
     {% include "@Contao/opentimes/_json_ld.html.twig" %}

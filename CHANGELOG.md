@@ -2,8 +2,9 @@
 
 ## Unveröffentlicht
 
-### Behoben
-- Inhaltselement: Die Darstellung „Ortsliste“ ließ sich nicht wählen, weil die Maske nicht auf die Orte-Auswahl umschaltete. Jetzt stehen „Ort“ und „Orte“ immer in der Maske (nur das Frontend-Modul schaltet um)
+### Geändert
+- Ort(e): Es gibt nur noch die Checkbox-Auswahl „Orte“. Beide Layouts („Voll“, „Kompakt“) geben einen oder mehrere Orte aus; die frühere „Ortsliste“ entfällt (entspricht „Kompakt“ mit mehreren Orten)
+- Bestehende Elemente mit einem Einzel-Ort werden beim Öffnen im Backend übernommen und funktionieren bis dahin unverändert
 
 ### Neu
 - Feiertage je Bundesland (Auswahl beim Ort)
