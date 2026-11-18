@@ -80,7 +80,7 @@ composer install
 vendor/bin/phpunit
 ```
 
-Die Tests laufen bei jedem Push auch in GitHub Actions, dazu eine statische Analyse (PHPStan, noch nicht blockierend).
+Die Tests laufen bei jedem Push auch in GitHub Actions, dazu eine statische Analyse (PHPStan).
 Beim Veröffentlichen eines Releases laufen die Tests erneut; Packagist wird bei hinterlegten Zugangsdaten sofort benachrichtigt.
 
 ## Branding im Contao Manager
