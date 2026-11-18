@@ -1,0 +1,6 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Nächster Schritt: Resolver-Service (src/Resolver/) hier registrieren
