@@ -10,7 +10,11 @@
 
       {% include "@Contao/opentimes/_status.html.twig" with {status: entry.status, location: entry.location} %}
 
-      {% if layout == 'compact' %}
+      {% if layout == 'overview' %}
+        {% if entry.overview %}
+          {% include "@Contao/opentimes/_overview.html.twig" with {overview: entry.overview, location: entry.location} %}
+        {% endif %}
+      {% elseif layout == 'compact' %}
         {% include "@Contao/opentimes/_compact.html.twig" with {today: entry.today, has_plan: entry.has_plan} %}
       {% elseif show_week and entry.has_plan %}
         {% include "@Contao/opentimes/_week.html.twig" with {days: entry.days, location: entry.location} %}

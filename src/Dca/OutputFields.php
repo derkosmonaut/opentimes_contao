@@ -18,7 +18,7 @@ final class OutputFields
             'opentimes_layout' => [
                 'inputType' => 'select',
                 'default' => 'full',
-                'options' => ['full', 'compact'],
+                'options' => ['full', 'compact', 'overview'],
                 'reference' => &$GLOBALS['TL_LANG'][$table]['opentimes_layouts'],
                 'eval' => ['tl_class' => 'w50'],
                 'sql' => "varchar(16) NOT NULL default 'full'",
@@ -29,6 +29,14 @@ final class OutputFields
                 'options' => range(1, 14),
                 'eval' => ['tl_class' => 'w50'],
                 'sql' => 'smallint(5) unsigned NOT NULL default 7',
+            ],
+            'opentimes_months' => [
+                'inputType' => 'select',
+                'default' => 6,
+                'options' => [1, 2, 3, 4, 6, 9, 12, 18, 24],
+                'reference' => &$GLOBALS['TL_LANG'][$table]['opentimes_months_options'],
+                'eval' => ['tl_class' => 'w50'],
+                'sql' => 'smallint(5) unsigned NOT NULL default 6',
             ],
             'opentimes_locations' => [
                 'inputType' => 'checkbox',
@@ -55,5 +63,5 @@ final class OutputFields
         ];
     }
 
-    public const PALETTE = '{opentimes_legend},opentimes_locations,opentimes_layout,opentimes_days,opentimes_week,opentimes_jsonld;';
+    public const PALETTE = '{opentimes_legend},opentimes_locations,opentimes_layout,opentimes_days,opentimes_months,opentimes_week,opentimes_jsonld;';
 }

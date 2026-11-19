@@ -16,7 +16,7 @@ Eine kleine Öffnungszeiten-Erweiterung für Contao (Bundle für Contao 5.7 oder
 - Nachtbetrieb (Fenster über Mitternacht)
 - Gesetzliche Feiertage je Bundesland (geschlossen, eine Ausnahme hat Vorrang)
 - Zwei Zeitfenster pro Eintrag, Vorschau und Hinweise im Backend
-- Content-Element und Frontend-Modul, Layouts „Voll“ und „Kompakt“, jeweils mit einem oder mehreren Orten
+- Content-Element und Frontend-Modul, Layouts „Voll“, „Kompakt“ und „Übersicht“, jeweils mit einem oder mehreren Orten
 - Deutsche und englische Texte
 
 ## Auflösungsreihenfolge
@@ -66,6 +66,12 @@ Schließungs-Hinweis (Schritt 6). Zum Beenden Ende setzen, „Aktiv“ abwählen
 **5. Ausgabe auf der Seite.** Das Inhaltselement „Öffnungszeiten“ in einen Artikel einfügen (oder das gleichnamige
 Frontend-Modul im Seiten-Layout). Orte anhaken, Darstellung („Voll“ oder „Kompakt“) und Anzahl der Tage wählen,
 Wochenübersicht und strukturierte Daten (schema.org) ein- oder ausschalten.
+
+Die Darstellung „Übersicht“ fasst alle Zeiten eines Ortes zusammen, praktisch für die Planung im Voraus: **Standard**
+(Wochentage mit gleichen Zeiten gebündelt, z. B. „Mo–Fr“), **Saison** (jede Saison mit Zeitraum, die aktuelle ist
+markiert) und **Ausnahmen und Feiertage** der nächsten Monate. Wie weit voraus, bestimmt der „Vorschau-Zeitraum“
+(1 bis 24 Monate). Damit die Ausnahmen mit Namen erscheinen, bekommen sie beim Anlegen einen Titel
+(z. B. „Betriebsferien“). Feiertage stammen aus dem beim Ort gewählten Bundesland.
 
 ![Inhaltselement „Öffnungszeiten“](docs/screenshots/inhaltselement.png)
 

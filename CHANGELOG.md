@@ -9,6 +9,7 @@
 - Bestehende Elemente mit einem Einzel-Ort werden beim Öffnen im Backend übernommen und funktionieren bis dahin unverändert
 
 ### Neu
+- Layout „Übersicht“: fasst alle Zeiten auf einen Blick zusammen: Standard (Wochentage mit gleichen Zeiten gebündelt, z. B. „Mo–Fr“), Saisonzeiten (aktuelle Saison markiert) sowie Ausnahmen und Feiertage der nächsten Monate. Der Vorschau-Zeitraum (1 bis 24 Monate) ist einstellbar. Neue Spalte `opentimes_months` in `tl_content` und `tl_module` (Datenbank im Contao-Installtool aktualisieren). Saisons und Ausnahmen zeigen ihre Bezeichnung
 - Feiertage je Bundesland (Auswahl beim Ort)
 - Vorschau im Backend beim Ort, mit Hinweisen auf Unstimmigkeiten
 - Schnellauswahl der Wochentage („Mo–Fr“, „Wochenende“, „Alle Tage“)
