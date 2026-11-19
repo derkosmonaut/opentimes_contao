@@ -2,6 +2,10 @@
 
 ## Unveröffentlicht
 
+### Geändert (Backend und Ausgabe)
+- Backend: Je nach „Darstellung“ erscheinen nur die passenden Felder: „Kompakt“ nur die Orte, „Voll“ zusätzlich Anzahl Tage und Wochenübersicht, „Übersicht“ zusätzlich den Vorschau-Zeitraum
+- Übersicht: Überschriften der Blöcke sind keine `h3` mehr, sondern `span`, damit die Überschriftenhierarchie der Seite nicht gestört wird
+
 - Dokumentation: Anwendung in sechs Schritten mit Screenshots
 
 ### Geändert

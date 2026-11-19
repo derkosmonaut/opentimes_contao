@@ -11,6 +11,13 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['opentimes_hours'] =
     .'{protected_legend:hide},protected;'
     .'{expert_legend:hide},guests,cssID';
 
+// Darstellung wählt, welche weiteren Felder erscheinen (Subpalette je Wert)
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = OutputFields::SELECTOR;
+$GLOBALS['TL_DCA']['tl_module']['subpalettes'] = array_merge(
+    $GLOBALS['TL_DCA']['tl_module']['subpalettes'] ?? [],
+    OutputFields::SUBPALETTES,
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields'] = array_merge(
     $GLOBALS['TL_DCA']['tl_module']['fields'] ?? [],
     OutputFields::fields('tl_module'),
