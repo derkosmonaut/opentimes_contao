@@ -2,7 +2,7 @@
 
 # opentimes_contao
 
-*** noch nicht für den Liveeinsatz gedacht – noch in Entwicklung ***
+*** Release Candidate: im Einsatz getestet, aber noch nicht als stabil gekennzeichnet ***
 
 Eine kleine Öffnungszeiten-Erweiterung für Contao (Bundle für Contao 5.7 oder neuer, PHP 8.5).
 
@@ -31,8 +31,49 @@ Die speziellere Ebene schlägt die allgemeinere:
 
 ## Stand
 
-Gerüst, Backend-Datenmodell (DCA), Resolver (`src/Resolver/`, reines PHP mit
-Unit-Tests) und die Frontend-Ausgabe sind angelegt.
+Funktionsumfang vollständig umgesetzt und im Contao-Backend und -Frontend geprüft. Der Resolver
+(`src/Resolver/`, reines PHP) und die Datenbank-Anbindung sind mit Tests abgedeckt.
+
+## Anwendung
+
+**1. Ort anlegen.** Unter „Inhalte → Öffnungszeiten“ einen Ort anlegen. Die Symbole rechts führen zu den
+Zeitplänen, Ausnahmen und Schließungen des Ortes. Beim Ort lässt sich ein Bundesland für die gesetzlichen Feiertage
+wählen; darunter zeigt eine Vorschau den aktuellen Status und die nächsten Tage.
+
+![Ortsliste mit den Symbolen für Zeitpläne, Ausnahmen und Schließungen](docs/screenshots/orte.png)
+
+**2. Zeitpläne.** „Standardzeiten“ gelten immer, „Saisonzeiten“ nur im angegebenen Zeitraum (optional jährlich
+wiederholt, bei Überschneidung gewinnt die höhere Priorität). Je Zeitplan legst du Zeitfenster an: Wochentage
+anhaken (mit Schnellauswahl) und bis zu zwei Fenster pro Eintrag, z. B. 09:00–12:00 und 13:00–17:00.
+
+![Standard- und Saisonzeiten eines Ortes](docs/screenshots/zeitplaene.png)
+
+**3. Ausnahmen.** Für einzelne Tage oder Zeiträume (z. B. Heiligabend): geschlossen oder mit abweichenden Zeiten.
+Eine Ausnahme ersetzt den ganzen Tag und schlägt Zeitpläne und Feiertage. Bei einem einzelnen Tag das Ende leer lassen.
+
+![Ausnahme für Heiligabend](docs/screenshots/ausnahmen.png)
+
+**4. Spontane Schließung.** Unter „Schließungen“ Hinweistext und Beginn eintragen, das Ende ist optional („bis auf
+Weiteres“). Sie hat die höchste Priorität. Mit dem Haken „Als Alert ausspielen“ erscheint sie zusätzlich im
+Schließungs-Hinweis (Schritt 6). Zum Beenden Ende setzen, „Aktiv“ abwählen oder löschen.
+
+![Spontane Schließung](docs/screenshots/schliessungen.png)
+
+**5. Ausgabe auf der Seite.** Das Inhaltselement „Öffnungszeiten“ in einen Artikel einfügen (oder das gleichnamige
+Frontend-Modul im Seiten-Layout). Orte anhaken, Darstellung („Voll“ oder „Kompakt“) und Anzahl der Tage wählen,
+Wochenübersicht und strukturierte Daten (schema.org) ein- oder ausschalten.
+
+![Inhaltselement „Öffnungszeiten“](docs/screenshots/inhaltselement.png)
+
+**6. Schließungs-Hinweis im Seiten-Layout.** Das Modul „Schließungs-Hinweis“ anlegen (Orte wählen, ohne Auswahl
+gelten alle) und im Seiten-Layout einbinden. Es bleibt leer, bis eine Schließung mit dem Haken „Als Alert
+ausspielen“ läuft, und blendet sich zu Beginn und Ende automatisch ein und aus.
+
+![Modul „Schließungs-Hinweis“](docs/screenshots/alert-modul.png)
+
+So sieht das Ergebnis aus: oben der Hinweis des Moduls, darunter Status und Wochenübersicht des Inhaltselements.
+
+![Ausgabe im Frontend](docs/screenshots/frontend.png)
 
 ## Ausgabe
 

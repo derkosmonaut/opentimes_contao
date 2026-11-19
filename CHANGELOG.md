@@ -2,6 +2,8 @@
 
 ## Unveröffentlicht
 
+- Dokumentation: Anwendung in sechs Schritten mit Screenshots
+
 ### Geändert
 - Ort(e): Es gibt nur noch die Checkbox-Auswahl „Orte“. Beide Layouts („Voll“, „Kompakt“) geben einen oder mehrere Orte aus; die frühere „Ortsliste“ entfällt (entspricht „Kompakt“ mit mehreren Orten)
 - Bestehende Elemente mit einem Einzel-Ort werden beim Öffnen im Backend übernommen und funktionieren bis dahin unverändert
