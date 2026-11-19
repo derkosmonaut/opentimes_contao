@@ -7,6 +7,8 @@ namespace Derkosmonaut\OpenTimesBundle\Output;
 use DateTimeImmutable;
 use DateTimeZone;
 use Derkosmonaut\OpenTimesBundle\Repository\OpeningHoursRepository;
+use Derkosmonaut\OpenTimesBundle\Resolver\Model\ClosurePeriod;
+use Derkosmonaut\OpenTimesBundle\Resolver\Model\OpeningHours;
 use Derkosmonaut\OpenTimesBundle\Resolver\OpeningHoursResolver;
 
 /**
@@ -45,7 +47,16 @@ class AlertBuilder
                 continue;
             }
 
-            $hours = $this->repository->loadHours($id, $timezone);
+            $loaded = $this->repository->loadHours($id, $timezone);
+
+            // nur Schließungen, die als Alert ausgespielt werden sollen
+            $hours = new OpeningHours(
+                $loaded->defaultSlots,
+                $loaded->seasons,
+                $loaded->exceptions,
+                array_values(array_filter($loaded->closures, static fn (ClosurePeriod $c): bool => $c->alert)),
+                $loaded->holidays,
+            );
             $closure = $this->resolver->getActiveClosure($hours, $now);
 
             if (null !== $closure) {

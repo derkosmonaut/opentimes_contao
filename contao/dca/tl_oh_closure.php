@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_oh_closure'] = [
         ],
     ],
     'palettes' => [
-        'default' => '{closure_legend},message,active;{time_legend},start,stop',
+        'default' => '{closure_legend},message,active,alert;{time_legend},start,stop',
     ],
     'fields' => [
         'id' => [
@@ -73,6 +73,13 @@ $GLOBALS['TL_DCA']['tl_oh_closure'] = [
             'filter' => true,
             'eval' => ['tl_class' => 'w50 m12'],
             'sql' => "char(1) NOT NULL default '1'",
+        ],
+        // nur diese Schließungen zeigt das Modul "Schließungs-Hinweis" an
+        'alert' => [
+            'inputType' => 'checkbox',
+            'filter' => true,
+            'eval' => ['tl_class' => 'w50 m12'],
+            'sql' => "char(1) NOT NULL default ''",
         ],
         'start' => [
             'inputType' => 'text',

@@ -64,9 +64,10 @@ Theme über die CSS-Variablen `--opentimes-open`, `--opentimes-closed` und `--op
 ### Schließungs-Hinweis (Alert)
 
 Das Frontend-Modul „Schließungs-Hinweis“ lässt sich im Seiten-Layout einbinden. Solange keine
-Schließung läuft, gibt es nichts aus. Beginnt eine aktive Schließung (Beginn erreicht, Ende noch
+Schließung läuft, gibt es nichts aus. Beginnt eine aktive Schließung mit dem Haken „Als Alert ausspielen“ (Beginn erreicht, Ende noch
 nicht), erscheint ein Hinweis mit Ortsname, Text und, falls gesetzt, dem voraussichtlichen Ende;
-nach dem Ende verschwindet er wieder. Ohne Orte-Auswahl gelten alle Orte. Der Hinweis lässt sich über
+nach dem Ende verschwindet er wieder. Schließungen ohne den Haken erscheinen nur in der
+Öffnungszeiten-Ausgabe (Status „geschlossen“ mit Hinweistext), nicht als Alert. Ohne Orte-Auswahl gelten alle Orte. Der Hinweis lässt sich über
 `.opentimes-alert` gestalten und über das Template `frontend_module/opentimes_alert` überschreiben.
 
 Die Antwort wird bis zum nächsten Beginn oder Ende einer Schließung gecacht (15 Sekunden bis 5 Minuten).

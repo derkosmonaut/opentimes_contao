@@ -16,7 +16,7 @@
 - Tests mit Datenbank (SQLite), PHPStan und Release-Workflow in GitHub Actions
 
 ### Neu
-- Frontend-Modul „Schließungs-Hinweis“ fürs Seiten-Layout: zeigt einen Hinweis, solange eine Schließung läuft (mit Text und voraussichtlichem Ende), sonst bleibt es leer. Schaltet sich zu Beginn und Ende einer Schließung automatisch ein und aus
+- Frontend-Modul „Schließungs-Hinweis“ fürs Seiten-Layout: zeigt einen Hinweis, solange eine Schließung läuft (mit Text und voraussichtlichem Ende), sonst bleibt es leer. Nur Schließungen mit dem Haken „Als Alert ausspielen“ erscheinen dort (neue Spalte `alert` in `tl_oh_closure`). Schaltet sich zu Beginn und Ende einer Schließung automatisch ein und aus
 
 ### Geändert
 - Die Ausgabe wird über den Dienst `HoursRenderer` befüllt, Content-Element und Modul teilen sich die Templates

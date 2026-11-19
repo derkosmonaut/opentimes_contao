@@ -29,7 +29,7 @@ final class AlertBuilderTest extends TestCase
             'CREATE TABLE tl_oh_schedule (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, priority INTEGER)',
             'CREATE TABLE tl_oh_slot (id INTEGER PRIMARY KEY, pid INTEGER, weekdays BLOB, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
             'CREATE TABLE tl_oh_exception (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
-            'CREATE TABLE tl_oh_closure (id INTEGER PRIMARY KEY, pid INTEGER, message TEXT, active TEXT, "start" INTEGER, "stop" INTEGER)',
+            'CREATE TABLE tl_oh_closure (id INTEGER PRIMARY KEY, pid INTEGER, message TEXT, active TEXT, alert TEXT, "start" INTEGER, "stop" INTEGER)',
         ] as $sql) {
             $this->connection->executeStatement($sql);
         }
@@ -46,12 +46,13 @@ final class AlertBuilderTest extends TestCase
         return new DateTimeImmutable($dateTime, $this->timezone);
     }
 
-    private function addClosure(int $location, string $message, ?string $start, ?string $stop, string $active = '1'): void
+    private function addClosure(int $location, string $message, ?string $start, ?string $stop, string $active = '1', string $alert = '1'): void
     {
         $this->connection->insert('tl_oh_closure', [
             'pid' => $location,
             'message' => $message,
             'active' => $active,
+            'alert' => $alert,
             'start' => null === $start ? null : $this->at($start)->getTimestamp(),
             'stop' => null === $stop ? null : $this->at($stop)->getTimestamp(),
         ]);
@@ -95,6 +96,22 @@ final class AlertBuilderTest extends TestCase
         self::assertSame('', $alert['message']);
     }
 
+    public function testClosureWithoutAlertFlagIsNotShown(): void
+    {
+        $this->addClosure(1, 'nur intern sichtbar', '2026-11-18 08:00', null, '1', '');
+
+        $result = $this->builder->build([1], $this->at('2026-11-18 12:00'), $this->timezone);
+
+        self::assertSame([], $result['alerts']);
+    }
+
+    public function testClosureWithoutAlertFlagDoesNotShortenTheCache(): void
+    {
+        $this->addClosure(1, 'intern', '2026-11-18 12:01', null, '1', '');
+
+        self::assertSame(300, $this->builder->build([1], $this->at('2026-11-18 12:00'), $this->timezone)['maxAge']);
+    }
+
     public function testFutureAndEndedClosuresAreNotShown(): void
     {
         $this->addClosure(1, 'später', '2026-11-20 08:00', null);
@@ -105,7 +122,7 @@ final class AlertBuilderTest extends TestCase
 
     public function testInactiveClosureIsIgnored(): void
     {
-        $this->addClosure(1, 'aus', '2026-11-18 08:00', null, '');
+        $this->addClosure(1, 'aus', '2026-11-18 08:00', null, '', '1');
 
         self::assertSame([], $this->builder->build([1], $this->at('2026-11-18 12:00'), $this->timezone)['alerts']);
     }
