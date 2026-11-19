@@ -36,9 +36,13 @@ Funktionsumfang vollständig umgesetzt und im Contao-Backend und -Frontend gepr�
 
 ## Anwendung
 
-**1. Ort anlegen.** Unter „Inhalte → Öffnungszeiten“ einen Ort anlegen. Die Symbole rechts führen zu den
-Zeitplänen, Ausnahmen und Schließungen des Ortes. Beim Ort lässt sich ein Bundesland für die gesetzlichen Feiertage
-wählen; darunter zeigt eine Vorschau den aktuellen Status und die nächsten Tage.
+**1. Ort anlegen.** Unter „Inhalte → Öffnungszeiten“ einen Ort mit Name, Typ (schema.org) und Adresse anlegen. Optional
+lässt sich ein Bundesland für die gesetzlichen Feiertage wählen. Die Vorschau am Ende der Maske zeigt den
+gespeicherten Status und die nächsten Tage.
+
+![Ort bearbeiten: Name, Adresse, Feiertage und Vorschau](docs/screenshots/ort-anlegen.png)
+
+In der Ortsliste führen die Symbole rechts zu den Zeitplänen, Ausnahmen und Schließungen des Ortes.
 
 ![Ortsliste mit den Symbolen für Zeitpläne, Ausnahmen und Schließungen](docs/screenshots/orte.png)
 
