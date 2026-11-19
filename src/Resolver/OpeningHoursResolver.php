@@ -181,6 +181,14 @@ final class OpeningHoursResolver
         ));
     }
 
+    /**
+     * Die Saison, die an diesem Tag gilt (höchste Priorität), oder null.
+     */
+    public function getActiveSeason(OpeningHours $hours, DateTimeImmutable $date): ?Season
+    {
+        return $this->findSeason($hours, $date->format('Y-m-d'));
+    }
+
     private function findSeason(OpeningHours $hours, string $ymd): ?Season
     {
         $season = null;

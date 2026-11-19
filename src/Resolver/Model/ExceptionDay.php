@@ -16,6 +16,7 @@ final readonly class ExceptionDay
      * @param bool        $recurring jährlich wiederholen
      * @param bool        $closed    true = ganztägig geschlossen (slots werden ignoriert)
      * @param list<Slot>  $slots     abweichende Zeiten, gelten unabhängig vom Wochentag (Slot::allDays)
+     * @param string      $title     Bezeichnung für die Übersicht, z. B. "Betriebsferien" (leer = keine)
      */
     public function __construct(
         public string $start,
@@ -23,6 +24,7 @@ final readonly class ExceptionDay
         public bool $recurring,
         public bool $closed,
         public array $slots = [],
+        public string $title = '',
     ) {
     }
 }

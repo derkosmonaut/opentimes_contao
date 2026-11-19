@@ -60,7 +60,7 @@ class OpeningHoursRepository
     public function loadHours(int $locationId, DateTimeZone $timezone): OpeningHours
     {
         $schedules = $this->connection->fetchAllAssociative(
-            'SELECT id, type, `start`, `stop`, recurring, priority FROM tl_oh_schedule WHERE pid = ? ORDER BY id',
+            'SELECT id, type, title, `start`, `stop`, recurring, priority FROM tl_oh_schedule WHERE pid = ? ORDER BY id',
             [$locationId],
         );
 
@@ -97,7 +97,7 @@ class OpeningHoursRepository
                     continue;
                 }
 
-                $seasons[] = new Season($start, $stop ?? $start, '' !== (string) $schedule['recurring'], (int) $schedule['priority'], $slots);
+                $seasons[] = new Season($start, $stop ?? $start, '' !== (string) $schedule['recurring'], (int) $schedule['priority'], $slots, (string) $schedule['title']);
 
                 continue;
             }
@@ -112,7 +112,13 @@ class OpeningHoursRepository
             $this->loadExceptions($locationId, $timezone),
             $this->loadClosures($locationId, $timezone),
             $this->loadHolidays($locationId, $timezone),
+            $this->holidayRegion($locationId),
         );
+    }
+
+    private function holidayRegion(int $locationId): string
+    {
+        return (string) $this->connection->fetchOne('SELECT holiday_region FROM tl_oh_location WHERE id = ?', [$locationId]);
     }
 
     /**
@@ -122,7 +128,7 @@ class OpeningHoursRepository
      */
     private function loadHolidays(int $locationId, DateTimeZone $timezone): array
     {
-        $region = (string) $this->connection->fetchOne('SELECT holiday_region FROM tl_oh_location WHERE id = ?', [$locationId]);
+        $region = $this->holidayRegion($locationId);
 
         if ('' === $region) {
             return [];
@@ -139,7 +145,7 @@ class OpeningHoursRepository
     private function loadExceptions(int $locationId, DateTimeZone $timezone): array
     {
         $rows = $this->connection->fetchAllAssociative(
-            'SELECT type, `start`, `stop`, recurring, opens, closes, opens2, closes2 FROM tl_oh_exception WHERE pid = ? ORDER BY `start`',
+            'SELECT type, title, `start`, `stop`, recurring, opens, closes, opens2, closes2 FROM tl_oh_exception WHERE pid = ? ORDER BY `start`',
             [$locationId],
         );
 
@@ -178,6 +184,7 @@ class OpeningHoursRepository
                 '' !== (string) $row['recurring'],
                 'hours' !== $row['type'] || [] === $slots,
                 $slots,
+                (string) $row['title'],
             );
         }
 

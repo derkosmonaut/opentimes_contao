@@ -27,9 +27,9 @@ final class OpeningHoursRepositoryTest extends TestCase
 
         foreach ([
             'CREATE TABLE tl_oh_location (id INTEGER PRIMARY KEY, title TEXT, schema_type TEXT, street TEXT, postal TEXT, city TEXT, holiday_region TEXT)',
-            'CREATE TABLE tl_oh_schedule (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, priority INTEGER)',
+            'CREATE TABLE tl_oh_schedule (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, title TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, priority INTEGER)',
             'CREATE TABLE tl_oh_slot (id INTEGER PRIMARY KEY, pid INTEGER, weekdays BLOB, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
-            'CREATE TABLE tl_oh_exception (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
+            'CREATE TABLE tl_oh_exception (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, title TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
             'CREATE TABLE tl_oh_closure (id INTEGER PRIMARY KEY, pid INTEGER, message TEXT, active TEXT, alert TEXT, "start" INTEGER, "stop" INTEGER)',
         ] as $sql) {
             $this->connection->executeStatement($sql);
@@ -84,6 +84,19 @@ final class OpeningHoursRepositoryTest extends TestCase
         self::assertSame('09:00', $windows[0]->start->format('H:i'));
         self::assertSame('13:00', $windows[1]->start->format('H:i'));
         self::assertSame([], $resolver->getDayWindows($hours, new DateTimeImmutable('2026-11-21 00:00', $this->timezone)), 'Samstag ist geschlossen');
+    }
+
+    public function testTitlesAndHolidayRegionAreLoaded(): void
+    {
+        $this->connection->insert('tl_oh_schedule', ['id' => 2, 'pid' => 1, 'type' => 'season', 'title' => 'Sommer', 'start' => $this->timestamp('2026-04-01'), 'stop' => $this->timestamp('2026-10-31'), 'recurring' => '1', 'priority' => 0]);
+        $this->connection->insert('tl_oh_exception', ['pid' => 1, 'type' => 'closed', 'title' => 'Betriebsferien', 'start' => $this->timestamp('2026-08-01'), 'stop' => $this->timestamp('2026-08-14'), 'recurring' => '', 'opens' => '', 'closes' => '', 'opens2' => '', 'closes2' => '']);
+        $this->connection->update('tl_oh_location', ['holiday_region' => 'BY'], ['id' => 1]);
+
+        $hours = $this->repository()->loadHours(1, $this->timezone);
+
+        self::assertSame('Sommer', $hours->seasons[0]->title);
+        self::assertSame('Betriebsferien', $hours->exceptions[0]->title);
+        self::assertSame('BY', $hours->holidayRegion);
     }
 
     public function testSeasonOutsideItsRangeIsNotActive(): void

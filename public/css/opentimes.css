@@ -69,6 +69,67 @@
   color: var(--opentimes-closed);
 }
 
+/* Zeitübersicht (Layout "Übersicht") */
+.opentimes__overview-heading {
+  margin: 1.25em 0 .5em;
+  font-size: 1.1em;
+}
+
+.opentimes__overview-block {
+  margin: 0 0 1em;
+  padding: .5em .75em;
+  border-left: .25em solid transparent;
+}
+
+.opentimes__overview-block--current {
+  border-left-color: var(--opentimes-open, #1b7f3b);
+  background: rgba(0, 0, 0, .03);
+}
+
+.opentimes__overview-title {
+  margin: 0 0 .25em;
+  font-weight: 600;
+}
+
+.opentimes__overview-period,
+.opentimes__badge {
+  font-weight: 400;
+  font-size: .9em;
+  opacity: .8;
+}
+
+.opentimes__badge {
+  margin-left: .5em;
+  padding: 0 .4em;
+  border: 1px solid currentColor;
+  border-radius: .25em;
+}
+
+.opentimes__overview-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .15em 1.5em;
+  margin: 0;
+}
+
+.opentimes__overview-list dt {
+  font-weight: 600;
+}
+
+.opentimes__overview-list dd {
+  margin: 0;
+}
+
+.opentimes__overview-closed {
+  color: var(--opentimes-closed, #b3261e);
+}
+
+.opentimes__overview-note {
+  margin: .25em 0 0;
+  font-size: .9em;
+  opacity: .8;
+}
+
 /* Hinweis bei laufender Schließung (Modul "Schließungs-Hinweis") */
 .opentimes-alert {
   --opentimes-alert-bg: #fdecea;

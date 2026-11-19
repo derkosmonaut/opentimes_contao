@@ -19,7 +19,7 @@ use Derkosmonaut\OpenTimesBundle\Repository\OpeningHoursRepository;
  */
 class HoursRenderer
 {
-    public const LAYOUTS = ['full', 'compact'];
+    public const LAYOUTS = ['full', 'compact', 'overview'];
 
     /** Kürzeste und längste Cache-Zeit in Sekunden. */
     private const MIN_AGE = 60;
@@ -29,6 +29,7 @@ class HoursRenderer
         private readonly OpeningHoursRepository $repository,
         private readonly ViewDataBuilder $viewDataBuilder,
         private readonly SchemaOrgBuilder $schemaOrgBuilder,
+        private readonly OverviewBuilder $overviewBuilder,
     ) {
     }
 
@@ -44,6 +45,7 @@ class HoursRenderer
             $layout = 'compact';
         }
         $days = max(1, min(14, (int) ($row['opentimes_days'] ?? 0) ?: 7));
+        $months = max(1, min(24, (int) ($row['opentimes_months'] ?? 0) ?: 6));
         $ids = $this->locationIds($row);
 
         $timezone = new DateTimeZone(date_default_timezone_get());
@@ -68,6 +70,9 @@ class HoursRenderer
             $hours = $this->repository->loadHours($id, $timezone);
             $view = $this->viewDataBuilder->build($hours, $now, $this->getWeekdayLabels(), $days);
             $jsonLd = '';
+            $overview = 'overview' === $layout
+                ? $this->overviewBuilder->build($hours, $now, $this->getWeekdayLabels(true), $months)
+                : null;
 
             if ($showJsonLd) {
                 // HEX-Flags verhindern, dass Inhalte das <script>-Element verlassen können
@@ -85,6 +90,7 @@ class HoursRenderer
                 'days' => $view['days'],
                 'today' => $view['days'][0] ?? null,
                 'json_ld' => $jsonLd,
+                'overview' => $overview,
             ];
 
             $maxAge = min($maxAge, $this->secondsUntilChange($view['status'], $now));
@@ -96,13 +102,14 @@ class HoursRenderer
 
         $template->set('labels', $GLOBALS['TL_LANG']['opentimes'] ?? []);
         $template->set('layout', $layout);
+        $template->set('months', $months);
         $template->set('show_week', (bool) ($row['opentimes_week'] ?? false));
         $template->set('show_json_ld', $showJsonLd);
         $template->set('entries', $entries);
         $template->set('json_lds', $jsonLds);
 
         // einfache Layouts greifen direkt auf den ersten Ort zu
-        foreach (['location', 'status', 'has_plan', 'days', 'today', 'json_ld'] as $key) {
+        foreach (['location', 'status', 'has_plan', 'days', 'today', 'json_ld', 'overview'] as $key) {
             $template->set($key, $entries[0][$key]);
         }
 
@@ -144,12 +151,14 @@ class HoursRenderer
     }
 
     /**
-     * @return array<int, string> ISO-Wochentag => Bezeichnung
+     * @return array<int, string> ISO-Wochentag => Bezeichnung (kurz oder ausgeschrieben)
      */
-    private function getWeekdayLabels(): array
+    private function getWeekdayLabels(bool $short = false): array
     {
         // Contao führt den Sonntag als Index 0
-        $days = $GLOBALS['TL_LANG']['DAYS'] ?? ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+        $days = $GLOBALS['TL_LANG'][$short ? 'DAYS_SHORT' : 'DAYS'] ?? ($short
+            ? ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+            : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag']);
         $labels = [];
 
         for ($weekday = 1; $weekday <= 7; ++$weekday) {

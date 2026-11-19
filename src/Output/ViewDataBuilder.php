@@ -75,7 +75,7 @@ final class ViewDataBuilder
     /**
      * @return array{opens: string, closes: string, overnight: bool}
      */
-    private function formatWindow(Interval $interval): array
+    public static function formatWindow(Interval $interval): array
     {
         $closes = $interval->end->format('H:i');
         $nextDay = $interval->end->format('Y-m-d') !== $interval->start->format('Y-m-d');

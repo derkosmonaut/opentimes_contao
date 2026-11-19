@@ -16,6 +16,7 @@ final readonly class Season
      * @param bool       $recurring jährlich wiederholen (nur Monat und Tag zählen, auch über den Jahreswechsel)
      * @param int        $priority  bei Überlappung gewinnt die höhere Zahl, bei Gleichstand die erste Saison
      * @param list<Slot> $slots
+     * @param string     $title     Bezeichnung für die Übersicht, z. B. "Sommer" (leer = keine)
      */
     public function __construct(
         public string $start,
@@ -23,6 +24,7 @@ final readonly class Season
         public bool $recurring,
         public int $priority,
         public array $slots,
+        public string $title = '',
     ) {
     }
 }
