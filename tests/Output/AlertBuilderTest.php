@@ -26,9 +26,9 @@ final class AlertBuilderTest extends TestCase
 
         foreach ([
             'CREATE TABLE tl_oh_location (id INTEGER PRIMARY KEY, title TEXT, schema_type TEXT, street TEXT, postal TEXT, city TEXT, holiday_region TEXT)',
-            'CREATE TABLE tl_oh_schedule (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, priority INTEGER)',
+            'CREATE TABLE tl_oh_schedule (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, title TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, priority INTEGER)',
             'CREATE TABLE tl_oh_slot (id INTEGER PRIMARY KEY, pid INTEGER, weekdays BLOB, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
-            'CREATE TABLE tl_oh_exception (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
+            'CREATE TABLE tl_oh_exception (id INTEGER PRIMARY KEY, pid INTEGER, type TEXT, title TEXT, "start" INTEGER, "stop" INTEGER, recurring TEXT, opens TEXT, closes TEXT, opens2 TEXT, closes2 TEXT)',
             'CREATE TABLE tl_oh_closure (id INTEGER PRIMARY KEY, pid INTEGER, message TEXT, active TEXT, alert TEXT, "start" INTEGER, "stop" INTEGER)',
         ] as $sql) {
             $this->connection->executeStatement($sql);
