@@ -18,17 +18,17 @@
 <div class="opentimes__overview">
   {% if overview.standard is not null %}
     <section class="opentimes__overview-block{{ overview.standardCurrent ? ' opentimes__overview-block--current' }}">
-      <h3 class="opentimes__overview-title">
+      <span class="opentimes__overview-title">
         {{ labels.overview_standard }}
         {% if overview.standardCurrent %}<span class="opentimes__badge">{{ labels.overview_current }}</span>{% endif %}
-      </h3>
+      </span>
       {{ _self.groups(overview.standard, labels) }}
     </section>
   {% endif %}
 
   {% for season in overview.seasons %}
     <section class="opentimes__overview-block{{ season.current ? ' opentimes__overview-block--current' }}">
-      <h3 class="opentimes__overview-title">
+      <span class="opentimes__overview-title">
         {{ season.title ?: labels.overview_season }}
         <span class="opentimes__overview-period">
           {% if season.recurring %}
@@ -38,13 +38,13 @@
           {% endif %}
         </span>
         {% if season.current %}<span class="opentimes__badge">{{ labels.overview_current }}</span>{% endif %}
-      </h3>
+      </span>
       {{ _self.groups(season.groups, labels) }}
     </section>
   {% endfor %}
 
   <section class="opentimes__overview-block">
-    <h3 class="opentimes__overview-title">{{ labels.overview_upcoming }}</h3>
+    <span class="opentimes__overview-title">{{ labels.overview_upcoming }}</span>
     {% if overview.upcoming is empty %}
       <p class="opentimes__overview-note">{{ labels.overview_none }}</p>
     {% else %}

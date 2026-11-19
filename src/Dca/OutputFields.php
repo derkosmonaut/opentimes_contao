@@ -20,7 +20,7 @@ final class OutputFields
                 'default' => 'full',
                 'options' => ['full', 'compact', 'overview'],
                 'reference' => &$GLOBALS['TL_LANG'][$table]['opentimes_layouts'],
-                'eval' => ['tl_class' => 'w50'],
+                'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
                 'sql' => "varchar(16) NOT NULL default 'full'",
             ],
             'opentimes_days' => [
@@ -63,5 +63,17 @@ final class OutputFields
         ];
     }
 
-    public const PALETTE = '{opentimes_legend},opentimes_locations,opentimes_layout,opentimes_days,opentimes_months,opentimes_week,opentimes_jsonld;';
+    /** Feld, dessen Wert die weiteren Felder ein- und ausblendet (Selector der Palette). */
+    public const SELECTOR = 'opentimes_layout';
+
+    public const PALETTE = '{opentimes_legend},opentimes_locations,opentimes_layout,opentimes_jsonld;';
+
+    /**
+     * Felder je Darstellung: "Kompakt" braucht nur die Orte, "Voll" zusätzlich die Tage,
+     * "Übersicht" zusätzlich den Vorschau-Zeitraum.
+     */
+    public const SUBPALETTES = [
+        'opentimes_layout_full' => 'opentimes_days,opentimes_week',
+        'opentimes_layout_overview' => 'opentimes_months',
+    ];
 }
