@@ -49,6 +49,14 @@ class OpeningHoursRepository
         ];
     }
 
+    /**
+     * @return list<int>
+     */
+    public function findAllLocationIds(): array
+    {
+        return array_map('intval', $this->connection->fetchFirstColumn('SELECT id FROM tl_oh_location ORDER BY id'));
+    }
+
     public function loadHours(int $locationId, DateTimeZone $timezone): OpeningHours
     {
         $schedules = $this->connection->fetchAllAssociative(
@@ -182,7 +190,7 @@ class OpeningHoursRepository
     private function loadClosures(int $locationId, DateTimeZone $timezone): array
     {
         $rows = $this->connection->fetchAllAssociative(
-            'SELECT `start`, `stop`, active, message FROM tl_oh_closure WHERE pid = ? ORDER BY `start`',
+            'SELECT `start`, `stop`, active, message, alert FROM tl_oh_closure WHERE pid = ? ORDER BY `start`',
             [$locationId],
         );
 
@@ -198,6 +206,7 @@ class OpeningHoursRepository
                 empty($row['stop']) ? null : $this->createDateTime((int) $row['stop'], $timezone),
                 '' !== (string) $row['active'],
                 (string) $row['message'],
+                '' !== (string) $row['alert'],
             );
         }
 

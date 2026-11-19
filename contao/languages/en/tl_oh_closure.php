@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_oh_closure']['message'] = ['Notice', 'Shown on the website, e.g. "Closed today due to illness".'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['active'] = ['Active', 'Inactive closures are ignored.'];
+$GLOBALS['TL_LANG']['tl_oh_closure']['alert'] = ['Show as alert', 'Shows the closure in the "Closure notice" module (e.g. in the page layout). Without it the closure only appears in the opening hours output.'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['start'] = ['Start', 'From when the location is closed.'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['stop'] = ['End', 'Leave empty for "until further notice".'];
 

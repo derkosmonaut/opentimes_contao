@@ -61,6 +61,18 @@ damit sie für Screenreader gut lesbar ist. Der Status trägt die Klasse
 (`public/css/opentimes.css`) färbt geöffnet grün und geschlossen rot; die Farben lassen sich im
 Theme über die CSS-Variablen `--opentimes-open`, `--opentimes-closed` und `--opentimes-unknown` anpassen.
 
+### Schließungs-Hinweis (Alert)
+
+Das Frontend-Modul „Schließungs-Hinweis“ lässt sich im Seiten-Layout einbinden. Solange keine
+Schließung läuft, gibt es nichts aus. Beginnt eine aktive Schließung mit dem Haken „Als Alert ausspielen“ (Beginn erreicht, Ende noch
+nicht), erscheint ein Hinweis mit Ortsname, Text und, falls gesetzt, dem voraussichtlichen Ende;
+nach dem Ende verschwindet er wieder. Schließungen ohne den Haken erscheinen nur in der
+Öffnungszeiten-Ausgabe (Status „geschlossen“ mit Hinweistext), nicht als Alert. Ohne Orte-Auswahl gelten alle Orte. Der Hinweis lässt sich über
+`.opentimes-alert` gestalten und über das Template `frontend_module/opentimes_alert` überschreiben.
+
+Die Antwort wird bis zum nächsten Beginn oder Ende einer Schließung gecacht (15 Sekunden bis 5 Minuten).
+Hinweis: Ein Modul im Seiten-Layout verkürzt damit auch die Cache-Zeit der ganzen Seite.
+
 ### Cache
 
 Die Antwort wird bis zur nächsten Statusänderung gecacht, mindestens 60 Sekunden und höchstens

@@ -198,6 +198,36 @@ final class OpeningHoursResolver
         return $season;
     }
 
+    /**
+     * Die gerade laufende Schließung (aktiv, begonnen, noch nicht beendet), sonst null.
+     */
+    public function getActiveClosure(OpeningHours $hours, DateTimeImmutable $now): ?ClosurePeriod
+    {
+        return $this->findActiveClosure($hours, $now);
+    }
+
+    /**
+     * Nächster Zeitpunkt, an dem eine Schließung beginnt oder endet; null, wenn keiner absehbar ist.
+     */
+    public function getNextClosureChange(OpeningHours $hours, DateTimeImmutable $now): ?DateTimeImmutable
+    {
+        $next = null;
+
+        foreach ($hours->closures as $closure) {
+            if (!$closure->active) {
+                continue;
+            }
+
+            foreach ([$closure->start, $closure->stop] as $moment) {
+                if (null !== $moment && $moment > $now && (null === $next || $moment < $next)) {
+                    $next = $moment;
+                }
+            }
+        }
+
+        return $next;
+    }
+
     private function findActiveClosure(OpeningHours $hours, DateTimeImmutable $now): ?ClosurePeriod
     {
         foreach ($hours->closures as $closure) {

@@ -22,3 +22,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields'] = array_merge(
     $GLOBALS['TL_DCA']['tl_module']['fields'] ?? [],
     OutputFields::fields('tl_module'),
 );
+
+// Schließungs-Hinweis fürs Seiten-Layout: leer, solange keine Schließung läuft
+$GLOBALS['TL_DCA']['tl_module']['palettes']['opentimes_alert'] =
+    '{title_legend},name,type;'
+    .'{opentimes_legend},opentimes_alert_locations;'
+    .'{protected_legend:hide},protected;'
+    .'{expert_legend:hide},guests,cssID';
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['opentimes_alert_locations'] = [
+    'inputType' => 'checkbox',
+    'foreignKey' => 'tl_oh_location.title',
+    'eval' => ['multiple' => true, 'tl_class' => 'clr'],
+    'sql' => 'blob NULL',
+];

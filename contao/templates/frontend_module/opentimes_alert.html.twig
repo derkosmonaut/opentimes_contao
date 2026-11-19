@@ -1,0 +1,22 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{% use "@Contao/component/_stylesheet.html.twig" %}
+
+{# Wird nur gerendert, solange eine Schließung läuft; sonst bleibt das Modul leer. #}
+{% block content %}
+  {% add "opentimes_css" to stylesheets %}
+    {% with {file: asset('bundles/derkosmonautopentimes/css/opentimes.css')} %}
+      {{ block('stylesheet_component') }}
+    {% endwith %}
+  {% endadd %}
+
+  <div class="opentimes-alert" role="region" aria-label="{{ labels.alert.region }}">
+    {% for alert in alerts %}
+      <p class="opentimes-alert__item">
+        <strong class="opentimes-alert__title">{{ alert.location }}: {{ labels.alert.closed }}</strong>
+        {% if alert.message %}<span class="opentimes-alert__message">{{ alert.message }}</span>{% endif %}
+        {% if alert.until %}<span class="opentimes-alert__until">{{ labels.alert.until }} <time datetime="{{ alert.until|date('Y-m-d\\TH:i') }}">{{ alert.until|date('d.m.Y, H:i') }}</time> {{ labels.time_suffix }}</span>{% endif %}
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}
