@@ -1,5 +1,4 @@
-{# Kompakte Ausgabe für Kopf- oder Fußbereich: Status und die Zeiten von heute. Erwartet: status, today, has_plan, labels. #}
-{% include "@Contao/opentimes/_status.html.twig" %}
+{# Zeiten von heute für die kompakte Ausgabe. Erwartet: today, has_plan, labels. Der Status steht davor (_status). #}
 {% if has_plan and today %}
   <p class="opentimes__today-hours">
     {{ labels.today_hours }}:
