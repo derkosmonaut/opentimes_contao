@@ -83,6 +83,7 @@ class OpeningHoursRepository
         }
 
         $defaultSlots = null;
+        $defaultTitle = '';
         $seasons = [];
 
         foreach ($schedules as $schedule) {
@@ -104,6 +105,7 @@ class OpeningHoursRepository
 
             // mehrere Standardpläne werden zusammengeführt
             $defaultSlots = [...($defaultSlots ?? []), ...$slots];
+            $defaultTitle = '' !== $defaultTitle ? $defaultTitle : trim((string) $schedule['title']);
         }
 
         return new OpeningHours(
@@ -113,6 +115,7 @@ class OpeningHoursRepository
             $this->loadClosures($locationId, $timezone),
             $this->loadHolidays($locationId, $timezone),
             $this->holidayRegion($locationId),
+            $defaultTitle,
         );
     }
 

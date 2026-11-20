@@ -16,30 +16,24 @@
 {% endmacro %}
 
 <div class="opentimes__overview">
-  {% if overview.standard is not null %}
-    <section class="opentimes__overview-block{{ overview.standardCurrent ? ' opentimes__overview-block--current' }}">
+  {% for block in overview.blocks %}
+    <section class="opentimes__overview-block{{ block.current ? ' opentimes__overview-block--current' }}">
       <span class="opentimes__overview-title">
-        {{ labels.overview_standard }}
-        {% if overview.standardCurrent %}<span class="opentimes__badge">{{ labels.overview_current }}</span>{% endif %}
+        {% if block.kind == 'standard' %}
+          {{ block.title ?: labels.overview_standard }}
+        {% else %}
+          {{ block.title ?: labels.overview_season }}
+          <span class="opentimes__overview-period">
+            {% if block.recurring %}
+              <time>{{ block.start|date('d.m.') }}</time> {{ labels.overview_until }} <time>{{ block.stop|date('d.m.') }}</time>, {{ labels.overview_yearly }}
+            {% else %}
+              <time datetime="{{ block.start|date('Y-m-d') }}">{{ block.start|date('d.m.Y') }}</time> {{ labels.overview_until }} <time datetime="{{ block.stop|date('Y-m-d') }}">{{ block.stop|date('d.m.Y') }}</time>
+            {% endif %}
+          </span>
+        {% endif %}
+        {% if block.current %}<span class="opentimes__badge">{{ labels.overview_current }}</span>{% endif %}
       </span>
-      {{ _self.groups(overview.standard, labels) }}
-    </section>
-  {% endif %}
-
-  {% for season in overview.seasons %}
-    <section class="opentimes__overview-block{{ season.current ? ' opentimes__overview-block--current' }}">
-      <span class="opentimes__overview-title">
-        {{ season.title ?: labels.overview_season }}
-        <span class="opentimes__overview-period">
-          {% if season.recurring %}
-            <time>{{ season.start|date('d.m.') }}</time> {{ labels.overview_until }} <time>{{ season.stop|date('d.m.') }}</time>, {{ labels.overview_yearly }}
-          {% else %}
-            <time datetime="{{ season.start|date('Y-m-d') }}">{{ season.start|date('d.m.Y') }}</time> {{ labels.overview_until }} <time datetime="{{ season.stop|date('Y-m-d') }}">{{ season.stop|date('d.m.Y') }}</time>
-          {% endif %}
-        </span>
-        {% if season.current %}<span class="opentimes__badge">{{ labels.overview_current }}</span>{% endif %}
-      </span>
-      {{ _self.groups(season.groups, labels) }}
+      {{ _self.groups(block.groups, labels) }}
     </section>
   {% endfor %}
 

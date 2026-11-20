@@ -22,5 +22,6 @@ $GLOBALS['TL_LANG']['tl_oh_exception']['date_legend'] = 'Datum';
 $GLOBALS['TL_LANG']['tl_oh_exception']['hours_legend'] = 'Zeiten';
 
 $GLOBALS['TL_LANG']['tl_oh_exception']['edit'] = ['Ausnahme bearbeiten', 'Ausnahme ID %s bearbeiten'];
+$GLOBALS['TL_LANG']['tl_oh_exception']['copy'] = ['Ausnahme duplizieren', 'Ausnahme ID %s duplizieren'];
 $GLOBALS['TL_LANG']['tl_oh_exception']['delete'] = ['Ausnahme löschen', 'Ausnahme ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_oh_exception']['show'] = ['Details', 'Details von Ausnahme ID %s'];

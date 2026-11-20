@@ -2,6 +2,11 @@
 
 ## Unveröffentlicht
 
+### Neu (Duplizieren)
+- Backend: Orte, Zeitpläne, Zeitfenster, Ausnahmen und Schließungen lassen sich duplizieren. Bei Orten und Zeitplänen gibt es zusätzlich „mit Unterelementen duplizieren“ (Ort inkl. Zeitpläne, Zeitfenster, Ausnahmen, Schließungen). Kopierte Orte erhalten den Zusatz „(Kopie)“
+- Übersicht: Der Standard-Block zeigt die Bezeichnung des Standardplans aus dem Backend (z. B. „Regulär“); ohne Titel bleibt „Standard“
+- Übersicht: Der aktuell gültige Zeitraum (Saison oder Standard) steht jetzt oben, danach Standard und die weiteren Saisons
+
 ### Geändert (Backend und Ausgabe)
 - Backend: Je nach „Darstellung“ erscheinen nur die passenden Felder: „Kompakt“ nur die Orte, „Voll“ zusätzlich Anzahl Tage und Wochenübersicht, „Übersicht“ zusätzlich den Vorschau-Zeitraum
 - Übersicht: Überschriften der Blöcke sind keine `h3` mehr, sondern `span`, damit die Überschriftenhierarchie der Seite nicht gestört wird

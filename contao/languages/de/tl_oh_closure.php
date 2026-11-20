@@ -12,5 +12,6 @@ $GLOBALS['TL_LANG']['tl_oh_closure']['closure_legend'] = 'Schließung';
 $GLOBALS['TL_LANG']['tl_oh_closure']['time_legend'] = 'Zeitraum';
 
 $GLOBALS['TL_LANG']['tl_oh_closure']['edit'] = ['Schließung bearbeiten', 'Schließung ID %s bearbeiten'];
+$GLOBALS['TL_LANG']['tl_oh_closure']['copy'] = ['Schließung duplizieren', 'Schließung ID %s duplizieren'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['delete'] = ['Schließung löschen', 'Schließung ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['show'] = ['Details', 'Details von Schließung ID %s'];

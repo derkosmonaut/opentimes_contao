@@ -12,5 +12,6 @@ $GLOBALS['TL_LANG']['tl_oh_closure']['closure_legend'] = 'Closure';
 $GLOBALS['TL_LANG']['tl_oh_closure']['time_legend'] = 'Period';
 
 $GLOBALS['TL_LANG']['tl_oh_closure']['edit'] = ['Edit closure', 'Edit closure ID %s'];
+$GLOBALS['TL_LANG']['tl_oh_closure']['copy'] = ['Duplicate closure', 'Duplicate closure ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['delete'] = ['Delete closure', 'Delete closure ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_closure']['show'] = ['Details', 'Details of closure ID %s'];

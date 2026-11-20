@@ -18,6 +18,8 @@ $GLOBALS['TL_LANG']['tl_oh_schedule']['title_legend'] = 'Schedule';
 $GLOBALS['TL_LANG']['tl_oh_schedule']['season_legend'] = 'Season';
 
 $GLOBALS['TL_LANG']['tl_oh_schedule']['edit'] = ['Edit schedule', 'Edit schedule ID %s'];
+$GLOBALS['TL_LANG']['tl_oh_schedule']['copy'] = ['Duplicate schedule', 'Duplicate schedule ID %s'];
+$GLOBALS['TL_LANG']['tl_oh_schedule']['copyChilds'] = ['Duplicate schedule with its time windows', 'Duplicate schedule with its time windows (ID %s)'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['slots'] = ['Time windows', 'Time windows of schedule ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['delete'] = ['Delete schedule', 'Delete schedule ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['show'] = ['Details', 'Details of schedule ID %s'];

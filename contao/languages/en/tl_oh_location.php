@@ -27,12 +27,15 @@ $GLOBALS['TL_LANG']['tl_oh_location']['warnings'] = [
     'season_overlap' => 'These seasons overlap with the same priority: %s. The first one created applies. Give the intended season a higher priority.',
 ];
 
+$GLOBALS['TL_LANG']['tl_oh_location']['copy_suffix'] = ' (copy)';
 $GLOBALS['TL_LANG']['tl_oh_location']['title_legend'] = 'Location';
 $GLOBALS['TL_LANG']['tl_oh_location']['address_legend'] = 'Address';
 $GLOBALS['TL_LANG']['tl_oh_location']['holiday_legend'] = 'Public holidays';
 $GLOBALS['TL_LANG']['tl_oh_location']['preview_legend'] = 'Preview';
 
 $GLOBALS['TL_LANG']['tl_oh_location']['edit'] = ['Edit location', 'Edit location ID %s'];
+$GLOBALS['TL_LANG']['tl_oh_location']['copy'] = ['Duplicate location', 'Duplicate location ID %s'];
+$GLOBALS['TL_LANG']['tl_oh_location']['copyChilds'] = ['Duplicate location with schedules, exceptions and closures', 'Duplicate location with schedules, exceptions and closures (ID %s)'];
 $GLOBALS['TL_LANG']['tl_oh_location']['schedules'] = ['Schedules', 'Regular and seasonal hours of location ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_location']['exceptions'] = ['Exceptions', 'Exceptions of location ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_location']['closures'] = ['Closures', 'Spontaneous closures of location ID %s'];
