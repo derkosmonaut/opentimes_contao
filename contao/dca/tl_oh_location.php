@@ -33,6 +33,8 @@ $GLOBALS['TL_DCA']['tl_oh_location'] = [
         ],
         'operations' => [
             'edit' => ['href' => 'act=edit', 'icon' => 'edit.svg'],
+            'copy' => ['href' => 'act=copy', 'icon' => 'copy.svg'],
+            'copyChilds' => ['href' => 'act=copy&amp;childs=1', 'icon' => 'copychilds.svg'],
             'schedules' => ['href' => 'table=tl_oh_schedule', 'icon' => 'children.svg'],
             'exceptions' => ['href' => 'table=tl_oh_exception', 'icon' => 'bundles/derkosmonautopentimes/icons/calendar-day.svg'],
             'closures' => ['href' => 'table=tl_oh_closure', 'icon' => 'bundles/derkosmonautopentimes/icons/bell.svg'],

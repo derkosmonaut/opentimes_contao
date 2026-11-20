@@ -36,6 +36,7 @@ final class OverviewBuilder
      *     standard: list<Group>|null,
      *     standardCurrent: bool,
      *     seasons: list<array{title: string, start: DateTimeImmutable, stop: DateTimeImmutable, recurring: bool, current: bool, groups: list<Group>}>,
+     *     blocks: list<array{kind: string, title: string, start: DateTimeImmutable|null, stop: DateTimeImmutable|null, recurring: bool, current: bool, groups: list<Group>}>,
      *     upcoming: list<array{kind: string, title: string, start: DateTimeImmutable, stop: DateTimeImmutable|null, closed: bool, windows: list<Window>}>,
      *     until: DateTimeImmutable
      * }
@@ -46,10 +47,29 @@ final class OverviewBuilder
         $until = $today->modify('+'.max(1, min(24, $months)).' month');
         $active = $this->resolver->getActiveSeason($hours, $today);
 
+        $standard = null === $hours->defaultSlots ? null : $this->groups($hours->defaultSlots, $weekdayLabels);
+        $standardCurrent = null === $active;
+        $seasons = $this->seasons($hours, $today, $active, $weekdayLabels);
+
+        // Standard und Saisons als eine Liste; der aktuell gültige Zeitraum steht oben
+        $blocks = [];
+
+        if (null !== $standard) {
+            $blocks[] = ['kind' => 'standard', 'title' => '', 'start' => null, 'stop' => null, 'recurring' => false, 'current' => $standardCurrent, 'groups' => $standard];
+        }
+
+        foreach ($seasons as $season) {
+            $blocks[] = ['kind' => 'season', ...$season];
+        }
+
+        // die Sortierung ist stabil: sonst bleibt die Reihenfolge Standard, Saisons
+        usort($blocks, static fn (array $a, array $b): int => (int) $b['current'] <=> (int) $a['current']);
+
         return [
-            'standard' => null === $hours->defaultSlots ? null : $this->groups($hours->defaultSlots, $weekdayLabels),
-            'standardCurrent' => null === $active,
-            'seasons' => $this->seasons($hours, $today, $active, $weekdayLabels),
+            'standard' => $standard,
+            'standardCurrent' => $standardCurrent,
+            'seasons' => $seasons,
+            'blocks' => $blocks,
             'upcoming' => $this->upcoming($hours, $today, $until),
             'until' => $until->modify('-1 day'),
         ];

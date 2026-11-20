@@ -35,6 +35,8 @@ $GLOBALS['TL_DCA']['tl_oh_schedule'] = [
         ],
         'operations' => [
             'edit' => ['href' => 'act=edit', 'icon' => 'edit.svg'],
+            'copy' => ['href' => 'act=copy', 'icon' => 'copy.svg'],
+            'copyChilds' => ['href' => 'act=copy&amp;childs=1', 'icon' => 'copychilds.svg'],
             'slots' => ['href' => 'table=tl_oh_slot', 'icon' => 'children.svg'],
             'delete' => [
                 'href' => 'act=delete',

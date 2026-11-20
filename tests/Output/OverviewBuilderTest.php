@@ -76,6 +76,27 @@ final class OverviewBuilderTest extends TestCase
         self::assertSame('Mo–So', $view['seasons'][0]['groups'][0]['days']);
     }
 
+    public function testCurrentBlockComesFirst(): void
+    {
+        $slots = [Slot::allDays('10:00', '18:00')];
+        $hours = new OpeningHours([new Slot([1], '09:00', '10:00')], [
+            new Season('2026-04-01', '2026-12-31', true, 0, $slots, 'Sommer'),
+            new Season('2026-01-01', '2026-03-31', true, 0, $slots, 'Winter'),
+        ]);
+
+        $view = $this->builder->build($hours, $this->at('2026-11-18'), self::LABELS);
+
+        self::assertSame(['season', 'standard', 'season'], array_column($view['blocks'], 'kind'));
+        self::assertSame('Sommer', $view['blocks'][0]['title']);
+        self::assertTrue($view['blocks'][0]['current']);
+
+        $noSeason = $this->builder->build($hours, $this->at('2026-03-01'), self::LABELS);
+        self::assertSame(['season', 'standard', 'season'], array_column($noSeason['blocks'], 'kind'));
+
+        $plain = $this->builder->build(new OpeningHours([Slot::allDays('09:00', '10:00')], [new Season('2026-04-01', '2026-09-30', true, 0, $slots, 'Sommer')]), $this->at('2026-11-18'), self::LABELS);
+        self::assertSame(['standard', 'season'], array_column($plain['blocks'], 'kind'));
+    }
+
     public function testUpcomingExceptionsAndHolidays(): void
     {
         $hours = new OpeningHours(

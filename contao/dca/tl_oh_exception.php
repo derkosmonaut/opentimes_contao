@@ -37,6 +37,7 @@ $GLOBALS['TL_DCA']['tl_oh_exception'] = [
         ],
         'operations' => [
             'edit' => ['href' => 'act=edit', 'icon' => 'edit.svg'],
+            'copy' => ['href' => 'act=copy', 'icon' => 'copy.svg'],
             'delete' => [
                 'href' => 'act=delete',
                 'icon' => 'delete.svg',

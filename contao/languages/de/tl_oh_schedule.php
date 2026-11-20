@@ -18,6 +18,8 @@ $GLOBALS['TL_LANG']['tl_oh_schedule']['title_legend'] = 'Zeitplan';
 $GLOBALS['TL_LANG']['tl_oh_schedule']['season_legend'] = 'Saison';
 
 $GLOBALS['TL_LANG']['tl_oh_schedule']['edit'] = ['Zeitplan bearbeiten', 'Zeitplan ID %s bearbeiten'];
+$GLOBALS['TL_LANG']['tl_oh_schedule']['copy'] = ['Zeitplan duplizieren', 'Zeitplan ID %s duplizieren'];
+$GLOBALS['TL_LANG']['tl_oh_schedule']['copyChilds'] = ['Zeitplan mit Zeitfenstern duplizieren', 'Zeitplan mit Zeitfenstern duplizieren (ID %s)'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['slots'] = ['Zeitfenster', 'Zeitfenster von Zeitplan ID %s'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['delete'] = ['Zeitplan löschen', 'Zeitplan ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_oh_schedule']['show'] = ['Details', 'Details von Zeitplan ID %s'];

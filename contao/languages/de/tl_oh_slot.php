@@ -21,5 +21,6 @@ $GLOBALS['TL_LANG']['tl_oh_slot']['weekday_names'] = [
 $GLOBALS['TL_LANG']['tl_oh_slot']['slot_legend'] = 'Zeitfenster';
 
 $GLOBALS['TL_LANG']['tl_oh_slot']['edit'] = ['Zeitfenster bearbeiten', 'Zeitfenster ID %s bearbeiten'];
+$GLOBALS['TL_LANG']['tl_oh_slot']['copy'] = ['Zeitfenster duplizieren', 'Zeitfenster ID %s duplizieren'];
 $GLOBALS['TL_LANG']['tl_oh_slot']['delete'] = ['Zeitfenster löschen', 'Zeitfenster ID %s löschen'];
 $GLOBALS['TL_LANG']['tl_oh_slot']['show'] = ['Details', 'Details von Zeitfenster ID %s'];
