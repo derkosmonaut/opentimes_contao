@@ -88,6 +88,7 @@ final class OpeningHoursRepositoryTest extends TestCase
 
     public function testTitlesAndHolidayRegionAreLoaded(): void
     {
+        $this->connection->insert('tl_oh_schedule', ['id' => 1, 'pid' => 1, 'type' => 'default', 'title' => 'Regulär', 'start' => null, 'stop' => null, 'recurring' => '', 'priority' => 0]);
         $this->connection->insert('tl_oh_schedule', ['id' => 2, 'pid' => 1, 'type' => 'season', 'title' => 'Sommer', 'start' => $this->timestamp('2026-04-01'), 'stop' => $this->timestamp('2026-10-31'), 'recurring' => '1', 'priority' => 0]);
         $this->connection->insert('tl_oh_exception', ['pid' => 1, 'type' => 'closed', 'title' => 'Betriebsferien', 'start' => $this->timestamp('2026-08-01'), 'stop' => $this->timestamp('2026-08-14'), 'recurring' => '', 'opens' => '', 'closes' => '', 'opens2' => '', 'closes2' => '']);
         $this->connection->update('tl_oh_location', ['holiday_region' => 'BY'], ['id' => 1]);
@@ -97,6 +98,7 @@ final class OpeningHoursRepositoryTest extends TestCase
         self::assertSame('Sommer', $hours->seasons[0]->title);
         self::assertSame('Betriebsferien', $hours->exceptions[0]->title);
         self::assertSame('BY', $hours->holidayRegion);
+        self::assertSame('Regulär', $hours->defaultTitle);
     }
 
     public function testSeasonOutsideItsRangeIsNotActive(): void

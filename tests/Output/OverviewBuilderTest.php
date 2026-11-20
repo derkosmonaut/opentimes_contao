@@ -49,6 +49,16 @@ final class OverviewBuilderTest extends TestCase
         self::assertSame('Di, Fr–So', $view['standard'][1]['days']);
     }
 
+    public function testStandardBlockUsesTitleFromBackend(): void
+    {
+        $hours = new OpeningHours([Slot::allDays('09:00', '17:00')], defaultTitle: 'Regulär');
+
+        $view = $this->builder->build($hours, $this->at('2026-11-18'), self::LABELS);
+
+        self::assertSame('Regulär', $view['blocks'][0]['title']);
+        self::assertSame('', $this->builder->build(new OpeningHours([Slot::allDays('09:00', '17:00')]), $this->at('2026-11-18'), self::LABELS)['blocks'][0]['title']);
+    }
+
     public function testNoStandardPlan(): void
     {
         $view = $this->builder->build(new OpeningHours(null), $this->at('2026-11-18'), self::LABELS);

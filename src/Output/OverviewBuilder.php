@@ -55,7 +55,7 @@ final class OverviewBuilder
         $blocks = [];
 
         if (null !== $standard) {
-            $blocks[] = ['kind' => 'standard', 'title' => '', 'start' => null, 'stop' => null, 'recurring' => false, 'current' => $standardCurrent, 'groups' => $standard];
+            $blocks[] = ['kind' => 'standard', 'title' => $hours->defaultTitle, 'start' => null, 'stop' => null, 'recurring' => false, 'current' => $standardCurrent, 'groups' => $standard];
         }
 
         foreach ($seasons as $season) {

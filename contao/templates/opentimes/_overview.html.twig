@@ -20,7 +20,7 @@
     <section class="opentimes__overview-block{{ block.current ? ' opentimes__overview-block--current' }}">
       <span class="opentimes__overview-title">
         {% if block.kind == 'standard' %}
-          {{ labels.overview_standard }}
+          {{ block.title ?: labels.overview_standard }}
         {% else %}
           {{ block.title ?: labels.overview_season }}
           <span class="opentimes__overview-period">
