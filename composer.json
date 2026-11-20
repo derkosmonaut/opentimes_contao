@@ -3,6 +3,13 @@
     "description": "Öffnungszeiten für Contao: mehrere Orte, Standardzeiten, Saisonzeiten, Ausnahmen und spontane Schließungen",
     "type": "contao-bundle",
     "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Sebastian Baller / bbsMEDIEN",
+            "homepage": "https://bbsmedien.de",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^8.5",
         "contao/core-bundle": "^5.7",
